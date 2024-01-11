@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Securities\" />
     <Folder Include="VireModels\" />
     <Folder Include="Services\" />
   </ItemGroup>
