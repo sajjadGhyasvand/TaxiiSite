@@ -6,12 +6,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-var app = builder.Build();
-#region AddDBContext
 builder.Services.AddDbContext<DataBaseContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+var app = builder.Build();
+#region AddDBContext
+/*builder.Services.AddDbContext<DataBaseContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});*/
+
 #endregion
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

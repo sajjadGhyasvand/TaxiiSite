@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Taxii.DataLayer.Entities;
 
 namespace Taxii.DataLayer.Context
 {
@@ -13,5 +14,6 @@ namespace Taxii.DataLayer.Context
         {
             
         }
+        public DbSet<Role> Roles { get; set; }
     }
 }
