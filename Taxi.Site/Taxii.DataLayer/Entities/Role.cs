@@ -21,5 +21,10 @@ namespace Taxii.DataLayer.Entities
         [Required]
         [MaxLength(30)]
         public string Title { get; set; }
+
+        #region Relations
+        public virtual ICollection<User> User { get; set; }
+        
+        #endregion
     }
 }
