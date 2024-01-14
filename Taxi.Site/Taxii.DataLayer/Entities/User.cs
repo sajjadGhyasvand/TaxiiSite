@@ -29,5 +29,5 @@ namespace Taxii.DataLayer.Entities
 
         public virtual Role Role { get; set; }
         public virtual UserDetail UserDetail { get; set; }
-    }
+    } 
 }
