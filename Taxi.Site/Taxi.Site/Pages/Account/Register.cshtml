@@ -1,0 +1,30 @@
+﻿@page "/Register"
+@using Taxii.Core.VireModels
+@* @model Taxi.Site.Pages.Account.RegisterModel *@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "ورود به تاکسی";
+    // Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<h3 class="text-center">به اسنپ خوش آمدید</h3>
+<br />
+<h5 class="text-center">کد فعالسازی برای شما پیامک خواهد شد</h5>
+<hr />
+<form asp-action="Register">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" placeholder="مثل 09357584132" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class=" form-group mt-3">
+                <input  type="submit" value="ارسال کد فعالسازی" class="w-100 btn btn-success btn-block" />
+            </div>
+
+        </div>
+    </div>
+</form>
+

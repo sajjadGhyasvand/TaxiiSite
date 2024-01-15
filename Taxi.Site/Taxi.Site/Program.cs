@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Taxii.Core.Interfaces;
+using Taxii.Core.Services;
 using Taxii.DataLayer.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,14 +12,11 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-var app = builder.Build();
-#region AddDBContext
-/*builder.Services.AddDbContext<DataBaseContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});*/
+#region IoC
+builder.Services.AddTransient<IAccountService,AccountService>();
 
 #endregion
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
