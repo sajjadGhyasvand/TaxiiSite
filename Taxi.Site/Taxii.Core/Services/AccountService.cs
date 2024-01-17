@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Taxii.Core.Generatiors;
 using Taxii.Core.Interfaces;
+using Taxii.Core.Securities;
 using Taxii.Core.Senders;
 using Taxii.Core.VireModels;
 using Taxii.DataLayer.Context;
@@ -51,7 +52,7 @@ namespace Taxii.Core.Services
                 {
                     IsActive = false,
                     Id = CodeGenerators.GetId(),
-                    Password = CodeGenerators.GetActiveCode(),
+                    Password = HashEncode.GetHashCode(HashEncode.GetHashCode(CodeGenerators.GetActiveCode())),
                     RoleId = GetRoleByName("user"),
                     Token = null,
                     UserName = viewModel.UserName
@@ -100,7 +101,7 @@ namespace Taxii.Core.Services
         public void UpdateUserPassword(Guid Id, string code)
         {
             User user = _context.Users.Find(Id);
-            user.Password = code;
+            user.Password = HashEncode.GetHashCode(CodeGenerators.GetActiveCode());
             _context.SaveChanges();
         }
     }

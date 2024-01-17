@@ -20,7 +20,7 @@ namespace Taxii.DataLayer.Entities
         [MaxLength(11)]
         public string UserName { get; set; }
         [Display(Name = " کد ورود ")]
-        [MaxLength(6)]
+        [MaxLength(100)]
         public string Password { get; set; }
         [Display(Name = " توکن")]
         public string Token { get; set; }
