@@ -22,6 +22,19 @@ namespace Taxii.Core.Services
             _context = context;
         }
 
+        public async Task<User> ActiveUser(ActiveViewModel viewModel)
+        {
+            string pass = HashEncode.GetHashCode(HashEncode.GetHashCode(viewModel.Code));
+            User user = _context.Users.SingleOrDefault(u => u.Password == pass);
+            if (user == null)
+            {
+                user.IsActive = true;
+                user.Password = HashEncode.GetHashCode(HashEncode.GetHashCode(CodeGenerators.GetActiveCode()));
+                _context.SaveChanges();
+            }
+            return await Task.FromResult(user);
+        }
+
         public bool CheckMobileNumber(string userName)
         {
             return _context.Users.Any(u => u.UserName == userName);

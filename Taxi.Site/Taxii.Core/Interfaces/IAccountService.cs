@@ -14,5 +14,6 @@ namespace Taxii.Core.Interfaces
         Guid GetRoleByName(string name);
         Task<User> GetUser(string userName);
         void UpdateUserPassword(Guid Id, string code);
+        Task<User> ActiveUser(ActiveViewModel viewModel);
     }
 }
