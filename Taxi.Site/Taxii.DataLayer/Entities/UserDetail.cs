@@ -25,7 +25,7 @@ namespace Taxii.DataLayer.Entities
         public string FullName { get; set; }
         [Display(Name = "تاریخ تولد")]
         [MaxLength(10)]
-        public string BirthDate { get; set; }
+        public string? BirthDate { get; set; }
         public virtual User User { get; set; }
     }
 }

@@ -54,23 +54,23 @@ namespace Taxii.Core.Services
                     Id = CodeGenerators.GetId(),
                     Password = HashEncode.GetHashCode(HashEncode.GetHashCode(CodeGenerators.GetActiveCode())),
                     RoleId = GetRoleByName("user"),
-                    Token = null,
+                    Token = "ثبت نشده",
                     UserName = viewModel.UserName
                 };
                 _context.Users.Add(user);
                 UserDetail userDetail = new UserDetail()
                 {
                     UserId = user.Id,
-                    BirthDate = null,
+                    BirthDate = "ثبت نشده",
                     Date = DateTimeGenerators.GetShamsiDate(),
                     Time = DateTimeGenerators.GetShamsiTime(),
-                    FullName = null,
+                    FullName = "ثبت نشده",
                 };
                 _context.UserDetails.Add(userDetail);
                 _context.SaveChanges();
                 try
                 {
-                    SmsSender.VerifySend(user.UserName, "", user.Password);
+                    SmsSender.VerifySend(user.UserName, "test1", user.Password);
                 }
                 catch (Exception)
                 {
@@ -86,7 +86,7 @@ namespace Taxii.Core.Services
                 UpdateUserPassword(user.Id, code);
                 try
                 {
-                    SmsSender.VerifySend(user.UserName, "", code);
+                    SmsSender.VerifySend(user.UserName, "testi", code);
                 }
                 catch (Exception)
                 {

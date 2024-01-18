@@ -1,7 +1,6 @@
 ﻿@page "/Register"
 @using Taxii.Core.VireModels
-@* @model Taxi.Site.Pages.Account.RegisterModel *@
-@model RegisterViewModel
+@model Taxi.Site.Pages.Account.RegisterModel;
 @{
     ViewData["Title"] = "ورود به تاکسی";
     // Layout = "~/Views/Shared/_AccountLayout.cshtml";
@@ -16,12 +15,13 @@
         <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" placeholder="مثل 09357584132" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <label asp-for="_viewModel.UserName" class="control-label"></label>
+                <input asp-for="_viewModel.UserName" class="form-control" placeholder="مثل 09357584132" />
+                <span asp-validation-for="_viewModel.UserName" asp.handler-s class="text-danger"></span>
+
             </div>
             <div class=" form-group mt-3">
-                <input  type="submit" value="ارسال کد فعالسازی" class="w-100 btn btn-success btn-block" />
+                <input type="submit" value="ارسال کد فعالسازی" class="w-100 btn btn-success btn-block" />
             </div>
 
         </div>

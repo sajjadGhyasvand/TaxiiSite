@@ -8,21 +8,25 @@ namespace Taxi.Site.Pages.Account
 {
     public class RegisterModel : PageModel
     {
+        [BindProperty]
+        public RegisterViewModel _viewModel { get; set; }
         private readonly IAccountService _accountService;
+
+        public RegisterModel(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         public void OnGet()
         {
         }
-        public async Task<ActionResult> OnPost(RegisterViewModel viewModel) 
+        public async Task<ActionResult> OnPost()
         {
-            if (ModelState.IsValid)
-            {
-                User user = await _accountService.RegisterUser(viewModel);
-                if (user != null)
-                {
-                    return RedirectToPage("/Account/Active");
-                }
-            }
-            return RedirectToPage("/Register");
+            User user = await _accountService.RegisterUser(_viewModel);
+            if (user != null)
+                return RedirectToPage("/Account/Active");
+            else
+                return RedirectToPage("/Register");
         }
     }
 }
