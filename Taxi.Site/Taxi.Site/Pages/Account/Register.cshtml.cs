@@ -17,16 +17,19 @@ namespace Taxi.Site.Pages.Account
             _accountService = accountService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Page();
         }
         public async Task<ActionResult> OnPost()
         {
-            User user = await _accountService.RegisterUser(_viewModel);
-            if (user != null)
-                return RedirectToPage("/Account/Active");
-            else
-                return RedirectToPage("/Register");
+            if (ModelState.IsValid)
+            {
+                User user = await _accountService.RegisterUser(_viewModel);
+                if (user != null)
+                    return RedirectToPage("/Account/Active");
+            }
+            return Page();
         }
     }
 }

@@ -83,7 +83,7 @@ namespace Taxii.Core.Services
                 _context.SaveChanges();
                 try
                 {
-                    SmsSender.VerifySend(user.UserName, "test1", user.Password);
+                    SmsSender.VerifySend(user.UserName, "testi", user.Password);
                 }
                 catch (Exception)
                 {
