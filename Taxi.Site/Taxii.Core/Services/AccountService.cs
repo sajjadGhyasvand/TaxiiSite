@@ -60,12 +60,13 @@ namespace Taxii.Core.Services
         {
             if (!CheckMobileNumber(viewModel.UserName))
             {
+                string code = CodeGenerators.GetActiveCode();
                 //TODO => فقط ارسال پیامک فعالسازی
                 User user = new User()
                 {
                     IsActive = false,
                     Id = CodeGenerators.GetId(),
-                    Password = HashEncode.GetHashCode(HashEncode.GetHashCode(CodeGenerators.GetActiveCode())),
+                    Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code)),
                     RoleId = GetRoleByName("user"),
                     Token = "ثبت نشده",
                     UserName = viewModel.UserName
@@ -83,7 +84,7 @@ namespace Taxii.Core.Services
                 _context.SaveChanges();
                 try
                 {
-                    SmsSender.VerifySend(user.UserName, "testi", user.Password);
+                    SmsSender.VerifySend(user.UserName, "testi", code);
                 }
                 catch (Exception)
                 {
@@ -96,7 +97,7 @@ namespace Taxii.Core.Services
             {
                 User user = await GetUser(viewModel.UserName);
                 string code = CodeGenerators.GetActiveCode();
-                UpdateUserPassword(user.Id, code);
+                UpdateUserPassword(user.Id, HashEncode.GetHashCode(HashEncode.GetHashCode(code)));
                 try
                 {
                     SmsSender.VerifySend(user.UserName, "testi", code);

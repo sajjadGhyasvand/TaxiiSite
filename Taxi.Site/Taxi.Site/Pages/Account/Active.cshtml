@@ -5,7 +5,14 @@
     ViewData["Title"] = "فعال سازی حساب";
     // Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
-
+@if ( ViewData["IsError"].ToString() == "true")
+{
+    <script>
+        swal("اخطار", "کد فعالسازی اشتباه وارد شده است","warning",{
+            button:"متوجه شدم"
+                });
+    </script>
+}
 <h3 class="text-center">به اسنپ خوش آمدید</h3>
 <br />
 <h5 class="text-center">کد فعالسازی برای شما پیامک خواهد شد</h5>
@@ -27,3 +34,8 @@
         </div>
     </div>
 </form>
+
+@section Scripts
+{
+    <script src="~/js/sweet.js"></script>
+}
