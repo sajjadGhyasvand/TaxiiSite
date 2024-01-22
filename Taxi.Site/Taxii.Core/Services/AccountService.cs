@@ -26,10 +26,11 @@ namespace Taxii.Core.Services
         {
             string pass = HashEncode.GetHashCode(HashEncode.GetHashCode(viewModel.Code));
             User user = _context.Users.SingleOrDefault(u => u.Password == pass);
-            if (user == null)
+            var code = CodeGenerators.GetActiveCode();
+            if (user != null)
             {
                 user.IsActive = true;
-                user.Password = HashEncode.GetHashCode(HashEncode.GetHashCode(CodeGenerators.GetActiveCode()));
+                user.Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code));
                 _context.SaveChanges();
             }
             return await Task.FromResult(user);

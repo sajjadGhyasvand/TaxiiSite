@@ -20,7 +20,7 @@ namespace Taxi.Site.Pages.Account
         }
         public void OnGet()
         {
-            ViewData["IsError"] = false;
+            ViewData["IsError"] = "false";
         }
         public async Task<IActionResult> OnPost( )
         {
@@ -28,10 +28,11 @@ namespace Taxi.Site.Pages.Account
 
             if (user != null)
             {
+            ViewData["IsError"] = "false";
               // Ê—Êœ  
             }
 
-            ViewData["IsError"] = true;
+            ViewData["IsError"] = "true";
             return Page();
         }
     }

@@ -7,6 +7,7 @@
 }
 @if ( ViewData["IsError"].ToString() == "true")
 {
+    <script src="~/js/sweet.js"></script>
     <script>
         swal("اخطار", "کد فعالسازی اشتباه وارد شده است","warning",{
             button:"متوجه شدم"
@@ -34,8 +35,3 @@
         </div>
     </div>
 </form>
-
-@section Scripts
-{
-    <script src="~/js/sweet.js"></script>
-}
