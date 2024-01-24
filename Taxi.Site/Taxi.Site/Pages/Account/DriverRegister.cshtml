@@ -1,0 +1,30 @@
+﻿@page "/DriverRegister"
+@model Taxi.Site.Pages.Account.DriverRegisterModel
+@{
+}
+@{
+    ViewData["Title"] = "ورود راننده ";
+    // Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<h3 class="text-center">راننده گرامی  خوش آمدید</h3>
+<br />
+<h5 class="text-center">کد فعالسازی برای شما پیامک خواهد شد</h5>
+<hr />
+<form asp-action="DriverRegister" method="post">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="_viewModel.UserName" class="control-label"></label>
+                <input asp-for="_viewModel.UserName" class="form-control" placeholder="مثل 09357584132" />
+                <span asp-validation-for="_viewModel.UserName" asp.handler-s class="text-danger"></span>
+
+            </div>
+            <div class=" form-group mt-3">
+                <input type="submit" value="ارسال کد فعالسازی" class="w-100 btn btn-success btn-block" />
+            </div>
+
+        </div>
+    </div>
+</form>

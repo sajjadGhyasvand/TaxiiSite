@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Taxii.DataLayer\Taxii.DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\Driver\" />
+  </ItemGroup>
+
 </Project>

@@ -11,6 +11,7 @@ namespace Taxii.Core.Interfaces
     {
         bool CheckMobileNumber(string userName);
         Task<User> RegisterUser(RegisterViewModel viewModel);
+        Task<User> RegisterDriver(RegisterViewModel viewModel);
         Guid GetRoleByName(string name);
         Task<User> GetUser(string userName);
         void UpdateUserPassword(Guid Id, string code);

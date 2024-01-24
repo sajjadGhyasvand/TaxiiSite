@@ -23,11 +23,11 @@ namespace Taxii.DataLayer.Entities
         [MaxLength(100)]
         public string Password { get; set; }
         [Display(Name = " توکن")]
-        public string Token { get; set; }
+        public string? Token { get; set; }
         [Display(Name = " فعال/غیرفعال")]
         public bool IsActive { get; set; }
         [Display(Name = " کیف پول")]
-        public long Wallet { get; set; }
+        public long? Wallet { get; set; }
 
         #region Relations
         public virtual Role Role { get; set; }

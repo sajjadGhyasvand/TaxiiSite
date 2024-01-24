@@ -57,6 +57,68 @@ namespace Taxii.Core.Services
             return await Task.FromResult(_context.Users.SingleOrDefault(u => u.UserName == userName));
         }
 
+        public async Task<User> RegisterDriver(RegisterViewModel viewModel)
+        {
+            if (!CheckMobileNumber(viewModel.UserName))
+            {
+                string code = CodeGenerators.GetActiveCode();
+                //TODO => فقط ارسال پیامک فعالسازی
+                User user = new User()
+                {
+                    IsActive = false,
+                    Id = CodeGenerators.GetId(),
+                    Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code)),
+                    RoleId = GetRoleByName("driver"),
+                    /*Token = "ثبت نشده",*/
+                    UserName = viewModel.UserName
+                };
+                _context.Users.Add(user);
+                UserDetail userDetail = new UserDetail()
+                {
+                    UserId = user.Id,
+                    /*BirthDate = "ثبت نشده",*/
+                    Date = DateTimeGenerators.GetShamsiDate(),
+                    Time = DateTimeGenerators.GetShamsiTime(),
+                   /* FullName = "ثبت نشده",*/
+                };
+                _context.UserDetails.Add(userDetail);
+                Driver driver = new Driver()
+                {
+                    IsConfirm = true,
+                    UserId = user.Id
+
+                };
+                _context.Drivers.Add(driver);
+                _context.SaveChanges();
+                try
+                {
+                    SmsSender.VerifySend(user.UserName, "testi", code);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                return await Task.FromResult(user);
+            }
+            else
+            {
+                User user = await GetUser(viewModel.UserName);
+                string code = CodeGenerators.GetActiveCode();
+                UpdateUserPassword(user.Id, HashEncode.GetHashCode(HashEncode.GetHashCode(code)));
+                try
+                {
+                    SmsSender.VerifySend(user.UserName, "testi", code);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                return await Task.FromResult(user);
+            }
+        }
+
         public async Task<User> RegisterUser(RegisterViewModel viewModel)
         {
             if (!CheckMobileNumber(viewModel.UserName))

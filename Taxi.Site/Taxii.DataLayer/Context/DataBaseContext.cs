@@ -14,6 +14,9 @@ namespace Taxii.DataLayer.Context
         {
             
         }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Color> Colors { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
