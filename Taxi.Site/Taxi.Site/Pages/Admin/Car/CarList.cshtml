@@ -1,0 +1,43 @@
+﻿@page "/Admin/Cars"
+@model Taxi.Site.Pages.Admin.Car.IndexModel
+@{
+    ViewData["Title"] = "نمایش خودروها";
+    Layout = "_DashBoarddLayout";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">خودروها</h4>
+                <h4 class="category pull-left">
+                    <a asp-page="AddCar" class="btn btn-success">جدید</a>
+                </h4>
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>نام</th>
+                        <th>عملیات</th>
+                    </tr>
+                    <tbody>
+                        @foreach (var car in Model.CarList)
+                        {
+                            <tr>
+                                <td>@car.Name</td>
+                                <td>
+                                    <a href="/admin/car/Edit/@car.Id" class="btn btn-xs btn-warning">
+                                       ویرایش
+                                    </a>
+                                    <a href="/admin/car/Delete/@car.Id" class="btn btn-xs btn-danger">
+                                       حذف
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

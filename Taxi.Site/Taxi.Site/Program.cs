@@ -13,7 +13,9 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 #region IoC
+
 builder.Services.AddTransient<IAccountService,AccountService>();
+builder.Services.AddTransient<IAdminService,AdminService>();
 
 #endregion
 var app = builder.Build();
