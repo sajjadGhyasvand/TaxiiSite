@@ -1,0 +1,34 @@
+﻿@page "{id}"
+@model Taxi.Site.Pages.Admin.Car.EditCarModel
+@{
+    ViewData["Title"] = "  ویرایش خودرو";
+    Layout = "_DashBoarddLayout";
+}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right"> ویرایش @Model._viewModel.Name </h4>
+            </div>
+            <div class="content">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Name">نام خودرو</label>
+                                <input asp-for="_viewModel.Name" type="text" class="form-control" placeholder="یوزرنیم">
+                                <div asp-validation-for="_viewModel.Name" class="text-danger"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-fill">ویرایش</button>
+                    <a href="/admin/cars" class="btn btn-danger btn-fill">
+                        بازگشت
+                    </a>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

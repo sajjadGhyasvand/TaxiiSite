@@ -21,7 +21,7 @@
 
     <!--  Light Bootstrap RTL Version CSS    -->
     <link href="~/css/Dashboard/light-bootstrap-dashboard-rtl.css" rel="stylesheet" />
-
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="~/css/Dashboard/demo.css" rel="stylesheet" />
@@ -239,6 +239,7 @@
 
     <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
     <script src="~/js/Dashboard/demo.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 
   @*   <script type="text/javascript">
         $(document).ready(function () {
