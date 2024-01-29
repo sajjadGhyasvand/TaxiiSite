@@ -15,8 +15,10 @@ namespace Taxii.DataLayer.Entities
         public Guid Id { get; set; }
         [Display(Name = "  نام رنگ ")]
         [Required]
-        [MaxLength(11)]
+        [MaxLength(20)]
         public string Name { get; set; }
+        [Display(Name = "  کد رنگ ")]
+        [MaxLength(11)]
         public string ColorCode { get; set; }
         public ICollection<Driver> Drivers { get; set; }
     }
