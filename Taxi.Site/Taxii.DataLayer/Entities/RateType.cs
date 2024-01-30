@@ -16,7 +16,7 @@ namespace Taxii.DataLayer.Entities
         [Display(Name = "  گزینه امتیاز  ")]
         public string? Name { get; set; }
         [Display(Name = "   مثبت ")]
-        public bool? OK { get; set; }
+        public bool OK { get; set; }
         [Display(Name = "  ترتیب نمایش ")]
         public int? ViewOrder { get; set; }
     }

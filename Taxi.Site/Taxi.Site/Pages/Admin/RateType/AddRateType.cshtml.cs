@@ -10,7 +10,7 @@ namespace Taxi.Site.Pages.Admin.RateType
     {
         private IAdminService _adminService;
         [BindProperty]
-        public ColorViewModel _viewModel { get; set; }
+        public RateTypeViewModel _viewModel { get; set; }
         public AddRateTypeModel(IAdminService adminService)
         {
             _adminService = adminService;
@@ -23,8 +23,8 @@ namespace Taxi.Site.Pages.Admin.RateType
         {
             if (ModelState.IsValid)
             {
-                _adminService.AddColor(_viewModel);
-                return RedirectToPage("ColorList");
+                _adminService.AddRateType(_viewModel);
+                return RedirectToPage("RateTypeList");
             }
             return Page();
         }

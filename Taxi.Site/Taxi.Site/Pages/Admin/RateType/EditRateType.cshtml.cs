@@ -32,7 +32,7 @@ namespace Taxi.Site.Pages.Admin.RateType
              
                 bool result = _adminService.UpdateColor(id,_viewModel);
                 if (result)
-                    return RedirectToPage("ColorList");
+                    return RedirectToPage("RateTypeList");
 
             return Page();
         }
