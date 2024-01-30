@@ -11,7 +11,7 @@ namespace Taxi.Site.Pages.Admin.RateType
         [BindProperty]
         public Guid Id { get; set; }
         [BindProperty]
-        public ColorViewModel _viewModel { get; set; }
+        public RateTypeViewModel _viewModel { get; set; }
         public EditRateTypeModel(IAdminService adminService)
         {
             _adminService = adminService;
@@ -19,21 +19,23 @@ namespace Taxi.Site.Pages.Admin.RateType
         public async Task<IActionResult> OnGet(string id)
         {
             Guid guid = new Guid(id);
-            var result = await _adminService.GetColorById(guid);
-            _viewModel = new ColorViewModel()
+            var result = await _adminService.GetRateTypeById(guid);
+            _viewModel = new RateTypeViewModel()
             {
-                ColorCode = result.ColorCode,
+                 ViewOrder = result.ViewOrder,
+                 OK = result.OK,
                 Name = result.Name
             };
             return Page();
         }
         public IActionResult OnPost(Guid id)
         {
-             
-                bool result = _adminService.UpdateColor(id,_viewModel);
+            if (ModelState.IsValid)
+            {
+                bool result = _adminService.UpdateRateType(id,_viewModel);
                 if (result)
                     return RedirectToPage("RateTypeList");
-
+            }
             return Page();
         }
     }

@@ -1,14 +1,14 @@
 ﻿@page "{id}"
 @model Taxi.Site.Pages.Admin.RateType.EditRateTypeModel
 @{
-    ViewData["Title"] = "  ویرایش رنگ";
+    ViewData["Title"] = "  ویرایش امتیازدهی";
     Layout = "_DashBoarddLayout";
 }
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="card">
             <div class="header">
-                <h4 class="title pull-right">افزودن رنگ </h4>
+                <h4 class="title pull-right">ویرایش امتیازدهی </h4>
             </div>
             <div class="content">
                 <form method="post">
@@ -16,15 +16,22 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label asp-for="_viewModel.Name">نام رنگ</label>
-                                <input asp-for="_viewModel.Name" type="text" class="form-control" placeholder="نام رنگ">
-                                <div asp-validation-for="_viewModel.Name" class="text-danger"></div>
+                                <label asp-for="_viewModel.Name">نام</label>
+                                <input asp-for="_viewModel.Name" type="text" class="form-control" placeholder="نام ">
+                                <span asp-validation-for="_viewModel.Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="_viewModel.ColorCode">کد رنگ</label>
-                                <input asp-for="_viewModel.ColorCode" type="color" class="form-control">
-                                <div asp-validation-for="_viewModel.ColorCode" class="text-danger"></div>
+                                <div >
+                                    <label asp-for="_viewModel.Name"> مثبت </label>
+                                    <input type="checkbox" asp-for="_viewModel.OK" />
+                                </div>
                             </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.ViewOrder"></label>
+                                <input asp-for="_viewModel.ViewOrder" type="number" class="form-control" min="0">
+                                <span asp-validation-for="_viewModel.ViewOrder" class="text-danger"></span>
+                            </div>
+
                         </div>
                     </div>
 
