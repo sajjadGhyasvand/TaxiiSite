@@ -20,5 +20,6 @@ namespace Taxii.DataLayer.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
+        public DbSet<RateType> RateTypes { get; set; }
     }
 }

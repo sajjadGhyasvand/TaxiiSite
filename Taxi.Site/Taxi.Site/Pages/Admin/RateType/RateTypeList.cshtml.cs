@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Taxii.Core.Interfaces;
 using Taxii.DataLayer.Entities;
 
-namespace Taxi.Site.Pages.Admin.Car
+namespace Taxi.Site.Pages.Admin.RateType
 {
     public class IndexModel : PageModel
     {
@@ -13,17 +13,17 @@ namespace Taxi.Site.Pages.Admin.Car
         {
             _adminService = adminService;
         }
-        public List<Taxii.DataLayer.Entities.Car> CarList { get; set; }
+        public List<Taxii.DataLayer.Entities.Color> ColorList { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
-            CarList = await _adminService.GetCars();
+            ColorList = await _adminService.GetColors();
             return Page();
         }
         public IActionResult OnGetDelete(Guid id)
         {
-            var result = _adminService.DeleteCar(id);
-            return RedirectToPage("CarList");
+            bool result = _adminService.DeleteColor(id);
+            return RedirectToPage("ColorList");
         }
     }
 }

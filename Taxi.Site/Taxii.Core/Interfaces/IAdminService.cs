@@ -25,5 +25,13 @@ namespace Taxii.Core.Interfaces
         bool UpdateColor(Guid id, ColorViewModel viewModel);
         bool DeleteColor(Guid id);
         #endregion
+
+        #region RateType
+        Task<List<RateType>> GetRateTypes();
+        Task<RateType> GetRateTypeById(Guid id);
+        void AddRateType(RateTypeViewModel viewModel);
+        bool UpdateRateType(Guid id, RateTypeViewModel viewModel);
+        bool DeleteRateType(Guid id);
+        #endregion
     }
 }

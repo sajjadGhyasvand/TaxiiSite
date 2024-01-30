@@ -125,5 +125,57 @@ namespace Taxii.Core.Services
             }
             return false;
         }
+
+        public async Task<List<RateType>> GetRateTypes()
+        {
+            return await _context.RateTypes.OrderBy(r => r.Name).ToListAsync();
+        }
+
+        public async Task<RateType> GetRateTypeById(Guid id)
+        {
+            return await _context.RateTypes.FindAsync(id);
+        }
+
+        public void AddRateType(RateTypeViewModel viewModel)
+        {
+            RateType rate = new()
+            {
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                OK = viewModel.OK,
+                ViewOrder = viewModel.ViewOrder
+            };
+            _context.RateTypes.Add(rate);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateRateType(Guid id, RateTypeViewModel viewModel)
+        {
+            RateType rate = _context.RateTypes.Find(id);
+            if (rate != null)
+            {
+                rate.Name = viewModel.Name;
+                rate.OK = viewModel.OK;
+                rate.ViewOrder = viewModel.ViewOrder;
+
+                _context.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteRateType(Guid id)
+        {
+            RateType rate = _context.RateTypes.Find(id);
+
+            if (rate != null)
+            {
+                _context.RateTypes.Remove(rate);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

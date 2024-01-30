@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Taxii.DataLayer.Context;
 
@@ -11,9 +12,11 @@ using Taxii.DataLayer.Context;
 namespace Taxii.DataLayer.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240130074908_mig_RateType")]
+    partial class mig_RateType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,12 +108,13 @@ namespace Taxii.DataLayer.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("OK")
+                    b.Property<bool>("OK")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ViewOrder")
+                    b.Property<int>("ViewOrder")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

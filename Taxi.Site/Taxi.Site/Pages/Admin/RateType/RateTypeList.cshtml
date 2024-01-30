@@ -1,7 +1,7 @@
-﻿@page "/Admin/Cars"
-@model Taxi.Site.Pages.Admin.Car.IndexModel
+﻿@page "/Admin/RateTypes"
+@model Taxi.Site.Pages.Admin.RateType.IndexModel
 @{
-    ViewData["Title"] = "نمایش خودروها";
+    ViewData["Title"] = "نمایش رنگ ها";
     Layout = "_DashBoarddLayout";
 }
 
@@ -10,29 +10,35 @@
         <div class="card">
             <div class="header">
                 <div class="row">
-                    <h4 class="col-md-8 title">خودروها</h4>
-                    <a class="col-md-2  category pull-left btn btn-success" asp-page="AddCar">جدید</a>
+                    <h4 class="col-md-8 title">رنگ ها</h4>
+                    <a class="col-md-2  category pull-left btn btn-success mr-3" asp-page="AddColor">جدید</a>
                 </div>
                 <div class="clearfix"></div>
                 <br />
-                <input type="text" class="form-control" placeholder="جستجو خودرو ..." id="mySearch" />
+                <input type="text" class="form-control" placeholder="جستجو رنگ ..." id="mySearch" />
             </div>
             <div class="content table-responsive table-full-width">
                 <table class="table table-hover table-striped">
                     <tr>
                         <th>نام</th>
+                        <th>کد رنگ</th>
                         <th>عملیات</th>
                     </tr>
                     <tbody id="myTable">
-                        @foreach (var car in Model.CarList)
+                        @foreach (var color in Model.ColorList)
                         {
                             <tr>
-                                <td>@car.Name</td>
+                                <td>@color.Name</td>
                                 <td>
-                                    <a href="/admin/car/EditCar/@car.Id" class="btn btn-xs btn-warning">
+                                    <span class="badge" style="color:@color.ColorCode !important">
+                                        @color.ColorCode
+                                     </span>
+                                </td>
+                                <td>
+                                    <a href="/admin/color/EditColor/@color.Id" class="btn btn-xs btn-warning">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a asp-page-handler="Delete" asp-route-id="@car.Id" class="btn btn-xs btn-danger">
+                                    <a asp-page-handler="Delete" asp-route-id="@color.Id" class="btn btn-xs btn-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
