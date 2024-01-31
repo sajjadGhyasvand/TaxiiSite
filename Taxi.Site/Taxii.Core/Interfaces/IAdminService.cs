@@ -37,6 +37,7 @@ namespace Taxii.Core.Interfaces
         Task<Setting> GetSetting();
         bool UpdateSiteSetting(SiteSettingViewModel viewModel);
         bool UpdatePriceSetting(PriceSettingViewModel viewModel);
+        bool UpdateaboutSetting(AboutSettingViewModel viewModel);
 
         #endregion
     }

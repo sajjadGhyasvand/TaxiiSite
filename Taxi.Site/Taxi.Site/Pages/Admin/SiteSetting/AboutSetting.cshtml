@@ -1,0 +1,46 @@
+﻿@page
+@model Taxi.Site.Pages.Admin.SiteSetting.AboutSettingModel
+
+@{
+    ViewData["Title"] = "تنظیمات درباره ما";
+    Layout = "_DashBoarddLayout";
+}
+@if (ViewData["IsSuccess"].ToString() == "true")
+{
+    <script src="~/js/sweet.js"></script>
+    <script>
+        swal("پیعام", "تغییرات با موفقیت انجام شد", "warning", {
+            button: "متوجه شدم"
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right"> ویزایش تنظیمات </h4>
+            </div>
+            <div class="content">
+                <form method="post">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="_viewModel.About">درباره ما</label>
+                                <textarea asp-for="_viewModel.About" type="text" class="form-control"></textarea>
+                                <span asp-validation-for="_viewModel.About" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-fill">ثبت</button>
+                    <a href="/DashBoard" class="btn btn-danger btn-fill">
+                        بازگشت
+                    </a>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
