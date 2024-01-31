@@ -1,0 +1,60 @@
+﻿@page 
+@model Taxi.Site.Pages.Admin.SiteSetting.indexModel
+@{
+    ViewData["Title"] = "تنظیمات سایت";
+    Layout = "_DashBoarddLayout";
+}
+@if (ViewData["IsSuccess"].ToString() == "true")
+{
+    <script src="~/js/sweet.js"></script>
+    <script>
+        swal("پیعام", "تغییرات با موفقیت انجام شد", "warning", {
+            button: "متوجه شدم"
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right"> ویزایش تنظیمات </h4>
+            </div>
+            <div class="content">
+                <form method="post">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Name">نام</label>
+                                <input asp-for="_viewModel.Name" type="text" class="form-control" placeholder="نام ">
+                                <span asp-validation-for="_viewModel.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Desc">توضیحات</label>
+                                <textarea asp-for="_viewModel.Desc" type="text" class="form-control" placeholder="توضیحات " ></textarea>
+                                <span asp-validation-for="_viewModel.Desc" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Tel">شماره تلفن</label>
+                                <input asp-for="_viewModel.Tel" type="text" class="form-control" placeholder="شماره تماس ">
+                                <span asp-validation-for="_viewModel.Tel" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Fax">شماره فکس</label>
+                                <input asp-for="_viewModel.Fax" type="text" class="form-control" placeholder="شماره فکس ">
+                                <span asp-validation-for="_viewModel.Fax" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-fill">ثبت</button>
+                    <a href="/DashBoard" class="btn btn-danger btn-fill">
+                        بازگشت
+                    </a>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

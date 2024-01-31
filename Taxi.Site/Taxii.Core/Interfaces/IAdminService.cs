@@ -33,5 +33,11 @@ namespace Taxii.Core.Interfaces
         bool UpdateRateType(Guid id, RateTypeViewModel viewModel);
         bool DeleteRateType(Guid id);
         #endregion
+        #region Setting
+        Task<Setting> GetSetting();
+        bool UpdateSiteSetting(SiteSettingViewModel viewModel);
+        bool UpdatePriceSetting(PriceSettingViewModel viewModel);
+
+        #endregion
     }
 }

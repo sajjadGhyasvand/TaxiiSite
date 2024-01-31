@@ -177,5 +177,39 @@ namespace Taxii.Core.Services
             }
             return false;
         }
+
+        public async Task<Setting> GetSetting()
+        {
+            return await _context.Settings.FirstOrDefaultAsync();
+        }
+
+        public bool UpdateSiteSetting(SiteSettingViewModel viewModel)
+        {
+            Setting setting = _context.Settings.FirstOrDefault();
+            if (setting != null)
+            {
+                setting.Name = viewModel.Name;
+                setting.Tel = viewModel.Tel;
+                setting.Fax = viewModel.Fax;
+                setting.Desc = viewModel.Desc;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+
+        }
+
+        public bool UpdatePriceSetting(PriceSettingViewModel viewModel)
+        {
+            Setting setting = _context.Settings.FirstOrDefault();
+            if (setting != null)
+            {
+                setting.IsDistancePrice = viewModel.IsDistancePrice;
+                setting.IsWeatherPrice = viewModel.IsWeatherPrice;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }
