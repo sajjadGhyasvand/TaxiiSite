@@ -1,0 +1,55 @@
+﻿@page
+@model Taxi.Site.Pages.Admin.SiteSetting.TermSettingModel
+@{
+    ViewData["Title"] = "تنظیمات قوانین ";
+    Layout = "_DashBoarddLayout";
+}
+@if (ViewData["IsSuccess"].ToString() == "true")
+{
+    <script src="~/js/sweet.js"></script>
+    <script>
+        swal("پیغام", "تغییرات با موفقیت انجام شد", "warning", {
+            button: "متوجه شدم"
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right"> ویزایش تنظیمات </h4>
+            </div>
+            <div class="content">
+                <form method="post">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Terms">درباره ما</label>
+                                <textarea asp-for="_viewModel.Terms" id="About" type="text" class="form-control"></textarea>
+                                <span asp-validation-for="_viewModel.Terms" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-fill">ثبت</button>
+                    <a href="/DashBoard" class="btn btn-danger btn-fill">
+                        بازگشت
+                    </a>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckeditor/adapters/jquery.js"></script>
+    <script>
+        $(function ()){
+            $('#About').ckeditor();
+        }
+    </script>
+}

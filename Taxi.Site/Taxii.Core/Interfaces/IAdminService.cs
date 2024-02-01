@@ -38,6 +38,7 @@ namespace Taxii.Core.Interfaces
         bool UpdateSiteSetting(SiteSettingViewModel viewModel);
         bool UpdatePriceSetting(PriceSettingViewModel viewModel);
         bool UpdateaboutSetting(AboutSettingViewModel viewModel);
+        bool UpdateTermSetting(TermSettingViewModel viewModel);
 
         #endregion
     }

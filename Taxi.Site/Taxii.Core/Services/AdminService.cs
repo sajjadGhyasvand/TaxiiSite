@@ -223,5 +223,17 @@ namespace Taxii.Core.Services
             }
             return false;
         }
+
+        public bool UpdateTermSetting(TermSettingViewModel viewModel)
+        {
+            Setting setting = _context.Settings.FirstOrDefault();
+            if (setting != null)
+            {
+                setting.About = viewModel.Terms;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }
