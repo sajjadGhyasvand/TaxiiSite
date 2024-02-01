@@ -28,7 +28,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label asp-for="_viewModel.About">درباره ما</label>
-                                <textarea asp-for="_viewModel.About" type="text" class="form-control"></textarea>
+                                <textarea asp-for="_viewModel.About" id="About"  type="text" class="form-control"></textarea>
                                 <span asp-validation-for="_viewModel.About" class="text-danger"></span>
                             </div>
                         </div>
@@ -44,3 +44,13 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckeditor/adapters/jquery.js"></script>
+    <script>
+        $(function ()){
+            $('#About').ckeditor();
+        }
+    </script>
+}
