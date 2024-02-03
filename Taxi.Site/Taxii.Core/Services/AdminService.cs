@@ -235,5 +235,58 @@ namespace Taxii.Core.Services
             }
             return false;
         }
+
+        public async Task<List<PriceType>> GetPriceTypes()
+        {
+            return await _context.PriceTypes.OrderBy(r => r.Name).ToListAsync();
+        }
+
+        public async Task<PriceType> GetPriceTypeById(Guid id)
+        {
+            return await _context.PriceTypes.FindAsync(id);
+        }
+
+        public void AddPriceType(PriceTypeViewModel viewModel)
+        {
+            PriceType price = new()
+            {
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                End = viewModel.End,
+                Start = viewModel.Start,
+                Price = viewModel.Price,
+            };
+            _context.PriceTypes.Add(price);
+            _context.SaveChanges();
+        }
+
+        public bool UpdatePriceType(Guid id, PriceTypeViewModel viewModel)
+        {
+            PriceType price = _context.PriceTypes.Find(id);
+            if (price != null)
+            {
+                price.Name = viewModel.Name;
+                price.Start = viewModel.Start;
+                price.End = viewModel.End;
+                price.Price = viewModel.Price;
+                _context.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeletePriceType(Guid id)
+        {
+            PriceType priceType = _context.PriceTypes.Find(id);
+
+            if (priceType != null)
+            {
+                _context.PriceTypes.Remove(priceType);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

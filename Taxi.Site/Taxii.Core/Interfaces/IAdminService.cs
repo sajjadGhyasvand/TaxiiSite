@@ -33,6 +33,7 @@ namespace Taxii.Core.Interfaces
         bool UpdateRateType(Guid id, RateTypeViewModel viewModel);
         bool DeleteRateType(Guid id);
         #endregion
+
         #region Setting
         Task<Setting> GetSetting();
         bool UpdateSiteSetting(SiteSettingViewModel viewModel);
@@ -40,6 +41,14 @@ namespace Taxii.Core.Interfaces
         bool UpdateaboutSetting(AboutSettingViewModel viewModel);
         bool UpdateTermSetting(TermSettingViewModel viewModel);
 
+        #endregion
+
+        #region PriceType
+        Task<List<PriceType>> GetPriceTypes();
+        Task<PriceType> GetPriceTypeById(Guid id);
+        void AddPriceType(PriceTypeViewModel viewModel);
+        bool UpdatePriceType(Guid id, PriceTypeViewModel viewModel);
+        bool DeletePriceType(Guid id);
         #endregion
     }
 }
