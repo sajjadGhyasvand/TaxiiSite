@@ -22,5 +22,6 @@ namespace Taxii.DataLayer.Context
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<RateType> RateTypes { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<PriceType> PriceTypes { get; set; }
     }
 }
