@@ -7,7 +7,8 @@ namespace Taxi.Site.Pages.Admin.PriceType
     public class PriceTypeListModel : PageModel
     {
         private IAdminService _adminService;
-
+        [BindProperty]
+        public Guid Id { get; set; }
         public PriceTypeListModel(IAdminService adminService)
         {
             _adminService = adminService;
