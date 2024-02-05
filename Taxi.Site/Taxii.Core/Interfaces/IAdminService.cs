@@ -50,5 +50,13 @@ namespace Taxii.Core.Interfaces
         bool UpdatePriceType(Guid id, PriceTypeViewModel viewModel);
         bool DeletePriceType(Guid id);
         #endregion
+
+        #region MonthPriceType
+        Task<List<MonthPriceType>> GetMonthPriceTypes();
+        Task<MonthPriceType> GetMonthPriceTypeById(Guid id);
+        void AddMonthPriceType(PriceMonthViewModel viewModel);
+        bool UpdateMonthPriceType(Guid id, PriceMonthViewModel viewModel);
+        bool DeleteMonthPriceType(Guid id);
+        #endregion
     }
 }

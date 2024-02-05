@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Taxii.Core.Generatiors;
@@ -288,5 +290,59 @@ namespace Taxii.Core.Services
             }
             return false;
         }
+
+        public async Task<List<MonthPriceType>> GetMonthPriceTypes()
+        {
+            return await _context.MonthPriceTypes.OrderBy(r => r.Name).ToListAsync();
+        }
+
+        public async Task<MonthPriceType> GetMonthPriceTypeById(Guid id)
+        {
+            return await _context.MonthPriceTypes.FindAsync(id);
+        }
+
+        public void AddMonthPriceType(PriceMonthViewModel viewModel)
+        {
+            MonthPriceType price = new()
+            {
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                End = viewModel.End,
+                Start = viewModel.Start,
+                Percent = viewModel.Percent,
+            };
+            _context.MonthPriceTypes.Add(price);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateMonthPriceType(Guid id, PriceMonthViewModel viewModel)
+        {
+            MonthPriceType price = _context.MonthPriceTypes.Find(id);
+            if (price != null)
+            {
+                price.Name = viewModel.Name;
+                price.Start = viewModel.Start;
+                price.End = viewModel.End;
+                price.Percent = viewModel.Percent;
+                _context.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteMonthPriceType(Guid id)
+        {
+            MonthPriceType priceType = _context.MonthPriceTypes.Find(id);
+
+            if (priceType != null)
+            {
+                _context.MonthPriceTypes.Remove(priceType);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
     }
 }
