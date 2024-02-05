@@ -3,38 +3,38 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Taxii.Core.Interfaces;
 using Taxii.Core.VireModels.Admin;
 
-namespace Taxi.Site.Pages.Admin.PriceType
+namespace Taxi.Site.Pages.Admin.MonthPriceType
 {
-    public class EditPriceTypeModel : PageModel
+    public class EditMonthPriceType : PageModel
     {
         private IAdminService _adminService;
         [BindProperty]
         public Guid Id { get; set; }
         [BindProperty]
-        public PriceTypeViewModel _viewModel { get; set; }
-        public EditPriceTypeModel(IAdminService adminService)
+        public PriceMonthViewModel _viewModel { get; set; }
+        public EditMonthPriceType(IAdminService adminService)
         {
             _adminService = adminService;
         }
         public async Task<IActionResult> OnGet(string id)
         {
             Guid guid = new Guid(id);
-            var result = await _adminService.GetPriceTypeById(guid);
-            _viewModel = new PriceTypeViewModel()
+            var result = await _adminService.GetMonthPriceTypeById(guid);
+            _viewModel = new PriceMonthViewModel()
             {
                 Name = result.Name,
                 Start = result.Start,
                 End = result.End,
-                Price = result.Price,
+                Percent = result.Percent,
             };
             return Page();
         }
         public IActionResult OnPost(Guid id)
         {
 
-            bool result = _adminService.UpdatePriceType(id, _viewModel);
+            bool result = _adminService.UpdateMonthPriceType(id, _viewModel);
             if (result)
-                return RedirectToPage("PriceTypeList");
+                return RedirectToPage("MonthPriceTypeList");
 
             return Page();
         }

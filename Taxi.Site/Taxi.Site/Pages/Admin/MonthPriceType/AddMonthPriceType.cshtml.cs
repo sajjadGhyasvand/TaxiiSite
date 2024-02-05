@@ -9,8 +9,8 @@ namespace Taxi.Site.Pages.Admin.MonthPriceType
     {
         private IAdminService _adminService;
         [BindProperty]
-        public PriceTypeViewModel _viewModel { get; set; }
-        public AddPriceTypeModel(IAdminService adminService)
+        public PriceMonthViewModel _viewModel { get; set; }
+        public AddMonthPriceTypeModel(IAdminService adminService)
         {
             _adminService = adminService;
         }
@@ -22,8 +22,8 @@ namespace Taxi.Site.Pages.Admin.MonthPriceType
         {
             if (ModelState.IsValid)
             {
-                _adminService.AddPriceType(_viewModel);
-                return RedirectToPage("PriceTypeList");
+                _adminService.AddMonthPriceType(_viewModel);
+                return RedirectToPage("MonthPriceTypeList");
             }
             return Page();
         }

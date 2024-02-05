@@ -2,27 +2,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Taxii.Core.Interfaces;
 
-namespace Taxi.Site.Pages.Admin.PriceType
+namespace Taxi.Site.Pages.Admin.MonthPriceType
 {
-    public class PriceTypeListModel : PageModel
+    public class MonthPriceTypeList : PageModel
     {
         private IAdminService _adminService;
         [BindProperty]
         public Guid Id { get; set; }
-        public PriceTypeListModel(IAdminService adminService)
+        public MonthPriceTypeList(IAdminService adminService)
         {
             _adminService = adminService;
         }
-        public List<Taxii.DataLayer.Entities.PriceType> PriceTypeList { get; set; }
+        public List<Taxii.DataLayer.Entities.MonthPriceType> MonthPriceTypelist { get; set; }
         public async Task<IActionResult> OnGet()
         {
-            PriceTypeList = await _adminService.GetPriceTypes();
+            MonthPriceTypelist = await _adminService.GetMonthPriceTypes();
             return Page();
         }
         public IActionResult OnGetDelete(Guid id)
         {
-            bool result = _adminService.DeletePriceType(id);
-            return RedirectToPage("PriceTypeList");
+            bool result = _adminService.DeleteMonthPriceType(id);
+            return RedirectToPage("MonthPriceTypeList");
         }
     }
 }

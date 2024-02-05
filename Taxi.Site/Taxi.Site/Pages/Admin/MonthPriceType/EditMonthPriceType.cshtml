@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model Taxi.Site.Pages.Admin.PriceType.EditPriceTypeModel
+@model Taxi.Site.Pages.Admin.MonthPriceType.EditMonthPriceType
 @{
     ViewData["Title"] = $"  ویرایش تعرفه ";
     Layout = "_DashBoarddLayout";
@@ -18,7 +18,7 @@
                             <div class="form-group">
                                 <label asp-for="_viewModel.Name">نام تعرفه</label>
                                 <input asp-for="_viewModel.Name" type="text" class="form-control" placeholder="نام تعرفه">
-                                <div asp-validation-for="_viewModel.Name" class="text-danger"></div>
+                                <span asp-validation-for="_viewModel.Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="_viewModel.Start">از مسافت</label>
@@ -28,18 +28,18 @@
                             <div class="form-group">
                                 <label asp-for="_viewModel.End">تا مسافت</label>
                                 <input asp-for="_viewModel.End" type="number" min="0" class="form-control">
-                                <div asp-validation-for="_viewModel.End" class="text-danger"></div>
+                                <span asp-validation-for="_viewModel.End" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="_viewModel.Price">نرخ ثابت</label>
-                                <input asp-for="_viewModel.Price" type="text" class="form-control">
-                                <div asp-validation-for="_viewModel.Price" class="text-danger"></div>
+                                <label asp-for="_viewModel.Percent">نرخ ثابت</label>
+                                <input asp-for="_viewModel.Percent" type="text" class="form-control">
+                                <span asp-validation-for="_viewModel.Percent" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
 
                     <button type="submit" class="btn btn-info btn-fill">ثبت</button>
-                    <a href="/admin/PriceTypes" class="btn btn-danger btn-fill">
+                    <a href="/admin/MonthPrices" class="btn btn-danger btn-fill">
                         بازگشت
                     </a>
                     <div class="clearfix"></div>

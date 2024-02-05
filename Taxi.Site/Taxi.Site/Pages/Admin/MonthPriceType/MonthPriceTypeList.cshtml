@@ -1,5 +1,5 @@
-﻿@page "/admin/pricetypes"
-@model Taxi.Site.Pages.Admin.PriceType.PriceTypeListModel
+﻿@page "/admin/MonthPrices"
+@model Taxi.Site.Pages.Admin.MonthPriceType.MonthPriceTypeList
 @{
     ViewData["Title"] = "نمایش تعرفه  ها";
     Layout = "_DashBoarddLayout";
@@ -11,7 +11,7 @@
             <div class="header">
                 <div class="row">
                     <h4 class="col-md-8 title">تعرفه ها</h4>
-                    <a class="col-md-2  category pull-left btn btn-success mr-3" asp-page="AddPriceType">جدید</a>
+                    <a class="col-md-2  category pull-left btn btn-success mr-3" asp-page="AddMonthPriceType">جدید</a>
                 </div>
                 <div class="clearfix"></div>
                 <br />
@@ -27,16 +27,16 @@
                         <th>عملیات</th>
                     </tr>
                     <tbody id="myTable">
-                        @foreach (var pricdType in Model.PriceTypeList)
+                        @foreach (var pricdType in Model.MonthPriceTypelist)
                         {
                             <tr>
                                 <td>@pricdType.Name</td>
                                 <td>@pricdType.Start</td>
                                 <td>@pricdType.End</td>
-                                <td>@pricdType.Price.ToString("n0")ریال</td>
+                                <td>@pricdType.Percent.ToString("n0")ریال</td>
 
                                 <td>
-                                    <a href="/admin/PriceType/EditPriceType/@pricdType.Id" class="btn btn-xs btn-warning">
+                                    <a href="/admin/MonthPriceType/EditMonthPriceType/@pricdType.Id" class="btn btn-xs btn-warning">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <a asp-page-handler="Delete" asp-route-id="@pricdType.Id" class="btn btn-xs btn-danger" id="deleteButton">
