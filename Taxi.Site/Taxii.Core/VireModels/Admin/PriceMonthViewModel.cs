@@ -13,9 +13,9 @@ namespace Taxii.Core.VireModels.Admin
         [Display(Name = "  عنوان ")]
         [MaxLength(100)]
         public string Name { get; set; }
-        [Display(Name = "  از ماه ")]
+        [Display(Name = "  از  ")]
         public int Start { get; set; }
-        [Display(Name = "  تا ماه ")]
+        [Display(Name = "  تا  ")]
         public int End { get; set; }
         [Display(Name = "  درصد ")]
         public float Percent { get; set; }

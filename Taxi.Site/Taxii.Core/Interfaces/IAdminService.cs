@@ -58,5 +58,21 @@ namespace Taxii.Core.Interfaces
         bool UpdateMonthPriceType(Guid id, PriceMonthViewModel viewModel);
         bool DeleteMonthPriceType(Guid id);
         #endregion
+
+        #region Humidity
+        Task<List<Humidity>> GetMonthHumidities();
+        Task<Humidity> GetMonthHumidityById(Guid id);
+        void AddHumidity(PriceMonthViewModel viewModel);
+        bool UpdateHumidity(Guid id, PriceMonthViewModel viewModel);
+        bool DeleteHumidity(Guid id);
+        #endregion
+
+        #region Temperature
+        Task<List<Temperature>> GetTemperatures();
+        Task<Temperature> GetTemperatureById(Guid id);
+        void AddTemperature(PriceMonthViewModel viewModel);
+        bool UpdateTemperature(Guid id, PriceMonthViewModel viewModel);
+        bool DeleteTemperature(Guid id);
+        #endregion
     }
 }

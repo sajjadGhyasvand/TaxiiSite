@@ -344,5 +344,110 @@ namespace Taxii.Core.Services
             return false;
         }
 
+        public async Task<List<Humidity>> GetMonthHumidities()
+        {
+            return await _context.Humidities.OrderBy(r => r.Name).ToListAsync();
+        }
+
+        public async Task<Humidity> GetMonthHumidityById(Guid id)
+        {
+            return await _context.Humidities.FindAsync(id);
+        }
+
+        public void AddHumidity(PriceMonthViewModel viewModel)
+        {
+            Humidity Humid = new()
+            {
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                End = viewModel.End,
+                Start = viewModel.Start,
+                Percent = viewModel.Percent,
+            };
+            _context.Humidities.Add(Humid);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateHumidity(Guid id, PriceMonthViewModel viewModel)
+        {
+            Humidity Humid = _context.Humidities.Find(id);
+            if (Humid != null)
+            {
+                Humid.Name = viewModel.Name;
+                Humid.Start = viewModel.Start;
+                Humid.End = viewModel.End;
+                Humid.Percent = viewModel.Percent;
+                _context.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteHumidity(Guid id)
+        {
+            Humidity Humid = _context.Humidities.Find(id);
+
+            if (Humid != null)
+            {
+                _context.Humidities.Remove(Humid);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<List<Temperature>> GetTemperatures()
+        {
+            return await _context.Temperatures.OrderBy(r => r.Name).ToListAsync();
+        }
+
+        public async Task<Temperature> GetTemperatureById(Guid id)
+        {
+            return await _context.Temperatures.FindAsync(id);
+        }
+
+        public void AddTemperature(PriceMonthViewModel viewModel)
+        {
+            Temperature temp = new()
+            {
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                End = viewModel.End,
+                Start = viewModel.Start,
+                Percent = viewModel.Percent,
+            };
+            _context.Temperatures.Add(temp);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateTemperature(Guid id, PriceMonthViewModel viewModel)
+        {
+            Temperature temperature = _context.Temperatures.Find(id);
+            if (temperature != null)
+            {
+                temperature.Name = viewModel.Name;
+                temperature.Start = viewModel.Start;
+                temperature.End = viewModel.End;
+                temperature.Percent = viewModel.Percent;
+                _context.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteTemperature(Guid id)
+        {
+            Temperature temperature = _context.Temperatures.Find(id);
+
+            if (temperature != null)
+            {
+                _context.Temperatures.Remove(temperature);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }
