@@ -60,8 +60,8 @@ namespace Taxii.Core.Interfaces
         #endregion
 
         #region Humidity
-        Task<List<Humidity>> GetMonthHumidities();
-        Task<Humidity> GetMonthHumidityById(Guid id);
+        Task<List<Humidity>> GetHumidities();
+        Task<Humidity> GetHumidityById(Guid id);
         void AddHumidity(PriceMonthViewModel viewModel);
         bool UpdateHumidity(Guid id, PriceMonthViewModel viewModel);
         bool DeleteHumidity(Guid id);

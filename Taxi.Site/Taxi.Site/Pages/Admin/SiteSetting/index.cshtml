@@ -1,7 +1,7 @@
-﻿@page 
+﻿@page
 @model Taxi.Site.Pages.Admin.SiteSetting.indexModel
 @{
-    ViewData["Title"] = "تنظیمات سایت";
+    ViewData["Title"] = "تنظیمات عمومی";
     Layout = "_DashBoarddLayout";
 }
 @if (ViewData["IsSuccess"].ToString() == "true")
@@ -14,15 +14,15 @@
     </script>
 }
 
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
+<div class="row d-flex justify-content-between">
+    <div class="col-md-8 ">
         <div class="card">
             <div class="header">
-                <h4 class="title pull-right"> ویزایش تنظیمات </h4>
+                <h4 class="title pull-right"> ویرایش تنظیمات عمومی </h4>
             </div>
             <div class="content">
                 <form method="post">
-                    <div class="row">
+                    <div class="row ">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="col-md-3">
                             <div class="form-group">
@@ -32,7 +32,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="_viewModel.Desc">توضیحات</label>
-                                <textarea asp-for="_viewModel.Desc" type="text" class="form-control" placeholder="توضیحات " ></textarea>
+                                <textarea asp-for="_viewModel.Desc" type="text" class="form-control" placeholder="توضیحات "></textarea>
                                 <span asp-validation-for="_viewModel.Desc" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -46,6 +46,7 @@
                                 <span asp-validation-for="_viewModel.Fax" class="text-danger"></span>
                             </div>
                         </div>
+                        
                     </div>
 
                     <button type="submit" class="btn btn-info btn-fill">ثبت</button>
@@ -56,5 +57,10 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-link my-2" href="/admin/SiteSetting/index">تنظیمات عمومی </a>
+        <a class="btn btn-link my-2" href="/admin/SiteSetting/TermSetting">تنظیمات قوانین</a>
+        <a class="btn btn-link my-2" href="/admin/SiteSetting/PriceSetting">تنظیمات مبلغ</a>
     </div>
 </div>

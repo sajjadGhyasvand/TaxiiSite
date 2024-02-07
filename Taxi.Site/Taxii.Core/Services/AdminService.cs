@@ -344,12 +344,12 @@ namespace Taxii.Core.Services
             return false;
         }
 
-        public async Task<List<Humidity>> GetMonthHumidities()
+        public async Task<List<Humidity>> GetHumidities()
         {
             return await _context.Humidities.OrderBy(r => r.Name).ToListAsync();
         }
 
-        public async Task<Humidity> GetMonthHumidityById(Guid id)
+        public async Task<Humidity> GetHumidityById(Guid id)
         {
             return await _context.Humidities.FindAsync(id);
         }

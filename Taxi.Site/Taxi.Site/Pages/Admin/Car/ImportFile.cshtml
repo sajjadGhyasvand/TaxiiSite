@@ -1,0 +1,34 @@
+﻿@page
+@model Taxi.Site.Pages.Admin.Car.ImportFileModel
+@{
+    ViewData["Title"] = "  ثبت اکسلی ";
+    Layout = "_DashBoarddLayout";
+}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="col-md-8 title pull-right">ثبت اکسلی خودرو </h4>
+                <a class="col-md-2  category pull-left btn btn-info" target="_blank" href="~/file/Book213.xlsx">فایل نمونه</a>
+            </div>
+            <div class="content">
+                 <form method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label >انتخاب فایل </label>
+                                <input type="file" class="form-control" name="file">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-fill">ثبت</button>
+                    <div class="clearfix"></div>
+                    <a href="/admin/cars" class="btn btn-danger btn-fill">
+                        بازگشت
+                    </a>
+                </form> 
+            </div>
+        </div>
+    </div>
+</div>

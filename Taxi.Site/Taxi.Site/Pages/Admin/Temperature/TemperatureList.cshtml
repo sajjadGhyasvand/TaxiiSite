@@ -1,7 +1,7 @@
-﻿@page "/Admin/Cars"
-@model Taxi.Site.Pages.Admin.Car.IndexModel
+﻿@page "/admin/Temperature"
+@model Taxi.Site.Pages.Admin.Temperature.TemperatureList
 @{
-    ViewData["Title"] = "نمایش خودروها";
+    ViewData["Title"] = "نمایش تعرفه رطوبت  ها";
     Layout = "_DashBoarddLayout";
 }
 
@@ -10,30 +10,36 @@
         <div class="card">
             <div class="header">
                 <div class="row">
-                    <h4 class="col-md-8 title">خودروها</h4>
-                    <a class="col-md-2  category pull-left btn btn-success" asp-page="AddCar">جدید</a>
-                    <a class="col-md-2  category pull-left btn btn-success" asp-page="ImportFile">ثت گروهی</a>
+                    <h4 class="col-md-8 title">تعرفه ها</h4>
+                    <a class="col-md-2  category pull-left btn btn-success mr-3" asp-page="AddTemperature">جدید</a>
                 </div>
                 <div class="clearfix"></div>
                 <br />
-                <input type="text" class="form-control" placeholder="جستجو خودرو ..." id="mySearch" />
+                <input type="text" class="form-control" placeholder="جستجو تعرفه ..." id="mySearch" />
             </div>
             <div class="content table-responsive table-full-width">
                 <table class="table table-hover table-striped">
                     <tr>
                         <th>نام</th>
+                        <th>از مسافت </th>
+                        <th>تا مسافت </th>
+                        <th>درصد</th>
                         <th>عملیات</th>
                     </tr>
                     <tbody id="myTable">
-                        @foreach (var car in Model.CarList)
+                        @foreach (var temp in Model.Humiditylist)
                         {
                             <tr>
-                                <td>@car.Name</td>
+                                <td>@temp.Name</td>
+                                <td>@temp.Start</td>
+                                <td>@temp.End</td>
+                                <td>@temp.Percent %</td>
+
                                 <td>
-                                    <a href="/admin/car/EditCar/@car.Id" class="btn btn-xs btn-warning">
+                                    <a href="/admin/Temperature/EditTemperature/@temp.Id" class="btn btn-xs btn-warning">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a asp-page-handler="Delete" id="deleteButton" asp-route-id="@car.Id" class="btn btn-xs btn-danger">
+                                    <a asp-page-handler="Delete" asp-route-id="@temp.Id" class="btn btn-xs btn-danger" id="deleteButton">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
