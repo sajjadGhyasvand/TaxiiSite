@@ -74,5 +74,19 @@ namespace Taxii.Core.Interfaces
         bool UpdateTemperature(Guid id, PriceMonthViewModel viewModel);
         bool DeleteTemperature(Guid id);
         #endregion
+
+        #region Role
+        Task<List<Role>> GetRoles();
+        Task<Role> GetRoleById(Guid id);
+        void AddRole(RoleViewModel viewModel);
+        bool UpdateRole(Guid id, RoleViewModel viewModel);
+        bool DeleteRole(Guid id);
+        #endregion
+
+        #region User
+        bool CheckUserName(string userName);
+        void AddUser(UserViewModel viewModel);
+        string GetRoleId(Guid id);
+        #endregion
     }
 }

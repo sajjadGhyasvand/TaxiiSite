@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Taxii.Core.Generatiors;
 using Taxii.Core.Interfaces;
+using Taxii.Core.Securities;
 using Taxii.Core.VireModels.Admin;
 using Taxii.DataLayer.Context;
 using Taxii.DataLayer.Entities;
@@ -448,6 +449,99 @@ namespace Taxii.Core.Services
                 return true;
             }
             return false;
+        }
+
+        public async Task<List<Role>> GetRoles()
+        {
+            return await _context.Roles.OrderBy(r => r.Name).ToListAsync();
+        }
+
+        public async Task<Role> GetRoleById(Guid id)
+        {
+            return await _context.Roles.FindAsync(id);
+        }
+
+        public void AddRole(RoleViewModel viewModel)
+        {
+            Role role = new()
+            {
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                Title = viewModel.Title,
+            };
+            _context.Roles.Add(role);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateRole(Guid id, RoleViewModel viewModel)
+        {
+            Role role = _context.Roles.Find(id);
+            if (role != null)
+            {
+                role.Name = viewModel.Name;
+                role.Title = viewModel.Title;
+                _context.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteRole(Guid id)
+        {
+            Role role = _context.Roles.Find(id);
+
+            if (role != null)
+            {
+                _context.Roles.Remove(role);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckUserName(string userName)
+        {
+           return _context.Users.Any(u => u.UserName == userName);
+        }
+
+        public void AddUser(UserViewModel viewModel)
+        {
+            User user = new()
+            {
+                Id = CodeGenerators.GetId(),
+                UserName = viewModel.UserName,
+                IsActive = viewModel.IsActive,
+                Password = HashEncode.GetHashCode(HashEncode.GetHashCode(CodeGenerators.GetActiveCode())),
+                RoleId = viewModel.RoleId,
+                Token = null,
+                Wallet = 0, 
+            };
+            _context.Users.Add(user);
+            UserDetail userDetail = new UserDetail()
+            {
+                UserId = user.Id,
+                Date = DateTimeGenerators.GetShamsiDate(),
+                Time = DateTimeGenerators.GetShamsiTime(),
+            };
+            _context.UserDetails.Add(userDetail);
+            
+            if (GetRoleId(viewModel.RoleId) == "driver")
+            {
+                Driver driver = new Driver()
+                {
+                    IsConfirm = true,
+                    UserId = user.Id
+
+                };
+                _context.Drivers.Add(driver);
+            }
+            _context.SaveChanges();
+        }
+
+        public string GetRoleId(Guid id)
+        {
+            return _context.Roles.Find(id).Name;
         }
     }
 }
