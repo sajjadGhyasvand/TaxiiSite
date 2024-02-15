@@ -22,7 +22,7 @@ namespace Taxii.DataLayer.Entities
         public string Time { get; set; }
         [Display(Name = "نام و نام خانوادگی")]
         [MaxLength(100)]
-        public string FullName { get; set; }
+        public string? FullName { get; set; }
         [Display(Name = "تاریخ تولد")]
         [MaxLength(10)]
         public string? BirthDate { get; set; }

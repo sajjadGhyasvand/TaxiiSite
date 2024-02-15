@@ -1,8 +1,8 @@
-﻿@page
-@model Taxi.Site.Pages.Admin.User.CreateUserModel
+﻿@page "{id:guid}"
+@model Taxi.Site.Pages.Admin.User.EditUserModel
 
 @{
-    ViewData["Title"] = "  ثبت کاربر";
+    ViewData["Title"] = "  ویرایش کاربر";
     Layout = "_DashBoarddLayout";
 }
 
@@ -11,10 +11,10 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="card">
             <div class="header">
-                <h4 class="title pull-right">ثبت کاربر </h4>
+                <h4 class="title pull-right">ویرایش کاربر </h4>
             </div>
             <div class="content">
-                <form method="post" >
+                <form method="post">
                     <div class="row">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="col-md-3">

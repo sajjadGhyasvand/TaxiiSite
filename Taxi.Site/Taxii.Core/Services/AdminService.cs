@@ -502,7 +502,7 @@ namespace Taxii.Core.Services
 
         public bool CheckUserName(string userName)
         {
-           return _context.Users.Any(u => u.UserName == userName);
+            return _context.Users.Any(u => u.UserName == userName);
         }
 
         public void AddUser(UserViewModel viewModel)
@@ -511,11 +511,11 @@ namespace Taxii.Core.Services
             {
                 Id = CodeGenerators.GetId(),
                 UserName = viewModel.UserName,
-                IsActive = viewModel.IsActive,
+                IsActive = true,
                 Password = HashEncode.GetHashCode(HashEncode.GetHashCode(CodeGenerators.GetActiveCode())),
                 RoleId = viewModel.RoleId,
                 Token = null,
-                Wallet = 0, 
+                Wallet = 0,
             };
             _context.Users.Add(user);
             UserDetail userDetail = new UserDetail()
@@ -525,7 +525,7 @@ namespace Taxii.Core.Services
                 Time = DateTimeGenerators.GetShamsiTime(),
             };
             _context.UserDetails.Add(userDetail);
-            
+
             if (GetRoleId(viewModel.RoleId) == "driver")
             {
                 Driver driver = new Driver()
@@ -542,6 +542,80 @@ namespace Taxii.Core.Services
         public string GetRoleId(Guid id)
         {
             return _context.Roles.Find(id).Name;
+        }
+
+        public async Task<List<User>> GetUsers()
+        {
+            return await _context.Users.Include(u => u.Role).OrderBy(r => r.UserName).ToListAsync();
+
+        }
+
+        public void DeleteUser(Guid id)
+        {
+            User user = _context.Users.Find(id);
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+
+        }
+
+        public void AddDriver(Guid id)
+        {
+            Driver driver = new Driver()
+            {
+                IsConfirm = true,
+                UserId = id
+            };
+            _context.Drivers.Add(driver);
+            _context.SaveChanges();
+        }
+
+        public void DeleteDriver(Guid id)
+        {
+            Driver driver = _context.Drivers.Find(id);
+            _context.Drivers.Remove(driver);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateUser(Guid id, UserViewModel viewModel)
+        {
+            User user = _context.Users.Find(id);
+            if (user != null)
+            {
+                user.RoleId = viewModel.RoleId;
+                user.IsActive = viewModel.IsActive;
+
+                user.UserName = viewModel.UserName;
+
+                if (GetRoleId(viewModel.RoleId) == "driver")
+                {
+                    if (!_context.Drivers.Any(d => d.UserId == id))
+                    {
+                        AddDriver(id);
+                    }
+                }
+                else
+                {
+                    if (_context.Drivers.Any(d => d.UserId == id))
+                    {
+                        DeleteDriver(id);
+                    }
+                }
+
+                _context.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckUserNameForUpdate(string userName, Guid id)
+        {
+            return _context.Users.Any(u => u.UserName == userName && u.Id != id);
+        }
+
+        public async Task<User> GetUserById(Guid id)
+        {
+           return await _context.Users.FindAsync(id);
         }
     }
 }

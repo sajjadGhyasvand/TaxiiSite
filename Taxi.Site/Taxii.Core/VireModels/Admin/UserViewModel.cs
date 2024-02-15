@@ -15,7 +15,7 @@ namespace Taxii.Core.VireModels.Admin
         [Display(Name = "  شماره موبایل")]
         [Required(ErrorMessage = "نباید بدون مقدار باشد ")]
         [MaxLength(11,ErrorMessage="مقدار{0} نباید بیشتر از {1} کاراکتر باشد.")]
-        [MinLength(11,ErrorMessage = "مقدار{0} نباید کمتر از {1} کاراکتر باشد."))]
+        [MinLength(11,ErrorMessage = "مقدار{0} نباید کمتر از {1} کاراکتر باشد.")]
         [Phone(ErrorMessage ="شماره همراه معتبر وارد نمایید")]
         public string UserName { get; set; }
 

@@ -87,6 +87,13 @@ namespace Taxii.Core.Interfaces
         bool CheckUserName(string userName);
         void AddUser(UserViewModel viewModel);
         string GetRoleId(Guid id);
+        Task<List<User>> GetUsers();
+        void DeleteUser(Guid id);
+        void AddDriver( Guid id);
+        void DeleteDriver(Guid id);
+        bool UpdateUser(Guid id, UserViewModel viewModel);
+        bool CheckUserNameForUpdate(string userName,Guid id);
+        Task<User> GetUserById(Guid id);
         #endregion
     }
 }

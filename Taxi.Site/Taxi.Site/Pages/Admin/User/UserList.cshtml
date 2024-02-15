@@ -1,0 +1,98 @@
+﻿@page "/Admin/Users"
+@model Taxi.Site.Pages.Admin.User.UserListModel
+@{
+    ViewData["Title"] = "  لیست کاربر";
+    Layout = "_DashBoarddLayout";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <div class="row">
+                    <h4 class="col-md-8 title">کاربران </h4>
+                    <a class="col-md-2  category pull-left btn btn-success mr-3" asp-page="CreateUser">جدید</a>
+                </div>
+                <div class="clearfix"></div>
+                <br />
+                <input type="text" class="form-control" placeholder="جستجو رنگ ..." id="mySearch" />
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>نام کاربر  </th>
+                        <th>نام نقش  </th>
+                        <th>وضعیت فعالیت</th>
+                        <th>عملیات</th>
+                    </tr>
+                    <tbody id="myTable">
+                        @foreach (var user in Model.UserList)
+                        {
+                            <tr>
+                                <td>@user.UserName</td>
+                                <td>@user.Role.Title</td>
+                                <td>
+                                    @if (user.IsActive)
+                                    {
+                                        <span class="laber label-success"></span>
+                                    }
+                                    else
+                                    {        
+                                        <span class="laber label-danger"></span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="/admin/user/EditUSer/@user.Id" class="btn btn-xs btn-warning">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a asp-page-handler="Delete" id="deleteButton" asp-route-id="@user.Id" class="btn btn-xs btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#mySearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('deleteButton').addEventListener('click', function (e) {
+            e.preventDefault();
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: "تایید حذف",
+                text: "آیا از حذف این مقدار اطمینان دارید",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "بله",
+                cancelButtonText: "لغو",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = e.target.href;
+                }
+            });
+        });
+    </script>
+}
