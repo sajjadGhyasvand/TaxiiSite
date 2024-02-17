@@ -41,6 +41,20 @@
                                     }
                                 </td>
                                 <td>
+
+                                    @if (user.Role.Name == "driver")
+                                    {
+                                        <a href="/admin/user/DriverProp/@user.Id" class="btn btn-xs btn-info">
+                                            <i class="fa fa-user-circle"></i>
+                                        </a>
+                                        <a href="/admin/user/EditUSer/@user.Id" class="btn btn-xs btn-primary">
+                                        <i class="fa fa-image"></i>
+                                    </a>
+                                        <a href="/admin/user/EditUSer/@user.Id" class="btn btn-xs btn-default">
+                                            <i class="fa fa-car"></i>
+                                        </a>
+                                    }
+
                                     <a href="/admin/user/EditUSer/@user.Id" class="btn btn-xs btn-warning">
                                         <i class="fa fa-edit"></i>
                                     </a>

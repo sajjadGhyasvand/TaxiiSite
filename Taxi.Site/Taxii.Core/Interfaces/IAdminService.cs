@@ -94,6 +94,8 @@ namespace Taxii.Core.Interfaces
         bool UpdateUser(Guid id, UserViewModel viewModel);
         bool CheckUserNameForUpdate(string userName,Guid id);
         Task<User> GetUserById(Guid id);
+        bool UpdateDriverProp(Guid id,DriverPropViewModel driverProp);
+        Task<Driver> GetDriver(Guid id);    
         #endregion
     }
 }

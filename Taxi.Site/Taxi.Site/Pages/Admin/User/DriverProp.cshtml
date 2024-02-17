@@ -1,0 +1,74 @@
+﻿@page "{id:guid}"
+@model Taxi.Site.Pages.Admin.User.DriverPropModel
+@{
+    ViewData["Title"] = "  مشخصات راننده";
+    Layout = "_DashBoarddLayout";
+}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right"> مشخصات راننده </h4>
+            </div>
+            <div class="content" >
+                <form method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="_viewModel.NationalCode"> </label>
+                                <input asp-for="_viewModel.NationalCode" type="text" class="form-control" placeholder="کدملی ">
+                                <div asp-validation-for="_viewModel.NationalCode" class="text-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Tel">تلفن </label>
+                                <input asp-for="_viewModel.Tel" class="form-control">
+                                <div asp-validation-for="_viewModel.Tel" class="text-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Address">آدرس </label>
+                                <input asp-for="_viewModel.Address" class="form-control">
+                                <div asp-validation-for="_viewModel.Address" class="text-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Avatar">تصویر </label>
+                                <input asp-for="_viewModel.Avatar" type="file" class="form-control">
+                                <div asp-validation-for="_viewModel.Avatar" class="text-danger"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-fill">ثبت</button>
+                    <a href="/admin/User/DriverProp/" class="btn btn-danger btn-fill">
+                        بازگشت
+                    </a>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="~/js/sweet.js"></script>
+@if (ViewData["IsSuccess"].ToString() == "true")
+{
+    <script src="~/js/sweet.js"></script>
+    <script>
+        swal("انجام شد", "تغییرات با موفقیت انجام شد", "success", {
+            button: "متوجه شدم"
+        });
+    </script>
+}
+@if (ViewData["IsError"].ToString() == "true")
+{
+    <script>
+        swal("اخطار", "مجدد تلاش کنید", "danger", {
+            button: "متوجه شدم"
+        });
+    </script>
+  
+}

@@ -615,7 +615,43 @@ namespace Taxii.Core.Services
 
         public async Task<User> GetUserById(Guid id)
         {
-           return await _context.Users.FindAsync(id);
+            return await _context.Users.FindAsync(id);
+        }
+
+        public bool UpdateDriverProp(Guid id, DriverPropViewModel driverProp)
+        {
+            if (driverProp.Avatar.FileName != "")
+            {
+                string strExt = Path.GetExtension(driverProp.Avatar.FileName);
+                if (strExt != ".jpg")
+                {
+                    return false;
+                }
+                string filePath = "";
+                driverProp.AvatarName = CodeGenerators.GetFileName() + strExt;
+                filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/driver", driverProp.AvatarName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    driverProp.Avatar.CopyTo(stream);
+                }
+                Driver driver = _context.Drivers.Find(id);
+                driver.Avatar = driverProp.AvatarName;
+                driver.NationalCOde = driverProp.NationalCode;
+                driver.Address = driverProp.Address;
+                driver.Tel = driverProp.Tel;
+
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<Driver> GetDriver(Guid id)
+        {
+            return await _context.Drivers.FindAsync(id);
         }
     }
 }
