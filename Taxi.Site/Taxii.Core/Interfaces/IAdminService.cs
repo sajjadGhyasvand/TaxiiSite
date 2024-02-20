@@ -86,16 +86,19 @@ namespace Taxii.Core.Interfaces
         #region User
         bool CheckUserName(string userName);
         void AddUser(UserViewModel viewModel);
+        Task<UserDetail> GetUserDetail(Guid id);
         string GetRoleId(Guid id);
         Task<List<User>> GetUsers();
         void DeleteUser(Guid id);
         void AddDriver( Guid id);
         void DeleteDriver(Guid id);
-        bool UpdateUser(Guid id, UserViewModel viewModel);
+        bool UpdateUser(Guid id, UserEditViewModel viewModel);
         bool CheckUserNameForUpdate(string userName,Guid id);
         Task<User> GetUserById(Guid id);
         bool UpdateDriverProp(Guid id,DriverPropViewModel driverProp);
         Task<Driver> GetDriver(Guid id);    
+        bool UpdateDriverCertificated(Guid id,DriverimgViewModel viewModel);
+        bool UpdateDriverCar(Guid id, DriverCarViewModel viewModel);
         #endregion
     }
 }

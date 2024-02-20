@@ -1,0 +1,53 @@
+﻿@page "{id:guid}"
+@model Taxi.Site.Pages.Admin.User.DriverCarModel
+
+@{
+    ViewData["Title"] = "  اطلاعات ماشین راننده";
+    Layout = "_DashBoarddLayout";
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">مشخصات خودرو راننده </h4>
+            </div>
+            <div class="content">
+                <form method="post">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="_viewModel.CarCode">پلاک ماشین </label>
+                                <input asp-for="_viewModel.CarCode" type="text" class="form-control">
+                                <span asp-validation-for="_viewModel.CarCode" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.CarId"> انتخاب ماشین </label>
+                                <Select class="form-control" asp-for="_viewModel.CarId" asp-items="Model.Cars">
+                                    <option value="0">انتخاب کنید </option>
+                                </Select>
+                                @* <input asp-for="_viewModel.RoleId" type="text" class="form-control" placeholder="نام رنگ"> *@
+                                <span asp-validation-for="_viewModel.CarId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.ColorId"> انتخاب رنگ </label>
+                                <Select class="form-control" asp-for="_viewModel.ColorId" asp-items="Model.Colors">
+                                    <option value="0">انتخاب کنید </option>
+                                </Select>
+                                @* <input asp-for="_viewModel.RoleId" type="text" class="form-control" placeholder="نام رنگ"> *@
+                                <span asp-validation-for="_viewModel.ColorId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-fill">ثبت</button>
+                    <a href="/admin/Users" class="btn btn-danger btn-fill">
+                        بازگشت
+                    </a>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@page "{id:guid}"
+@model Taxi.Site.Pages.Admin.User.DriverCertificateModel
+@{
+    ViewData["Title"] = "    مدارک راننده";
+    Layout = "_DashBoarddLayout";
+}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right"> مشخصات مدارک </h4>
+            </div>
+            <div class="content">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-3">
+                            
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Img">تصویر </label>
+                                <input asp-for="_viewModel.Img" type="file" class="form-control">
+                                <span asp-validation-for="_viewModel.Img" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.IsConfirm"> </label>
+                                <input asp-for="_viewModel.IsConfirm" type="checkbox" class="form-control" placeholder="کدملی ">
+                                <span asp-validation-for="_viewModel.IsConfirm" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-fill">ثبت</button>
+                    <a href="/Admin/Users" class="btn btn-danger btn-fill">
+                        بازگشت
+                    </a>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/sweet.js"></script>
+    @if (ViewData["IsSuccess"].ToString() == "true")
+    {
+        <script src="~/js/sweet.js"></script>
+        <script>
+            swal("انجام شد", "تغییرات با موفقیت انجام شد", "success", {
+                button: "متوجه شدم"
+            });
+        </script>
+    }
+    @if (ViewData["IsError"].ToString() == "true")
+    {
+        <script>
+            swal("اخطار", "مجدد تلاش کنید", "danger", {
+                button: "متوجه شدم"
+            });
+        </script>
+
+    }
+}

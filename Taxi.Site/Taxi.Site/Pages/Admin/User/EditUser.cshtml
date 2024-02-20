@@ -7,6 +7,8 @@
 }
 
 
+
+
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="card">
@@ -31,6 +33,16 @@
                                 <input asp-for="_viewModel.UserName" type="text" class="form-control">
                                 <span asp-validation-for="_viewModel.UserName" class="text-danger"></span>
                             </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.FullName">نام و نام خانوادگی </label>
+                                <input asp-for="_viewModel.FullName" type="text" class="form-control">
+                                <span asp-validation-for="_viewModel.FullName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.BirthDate"> تاریخ تولد</label>
+                                <input asp-for="_viewModel.BirthDate" class="form-control" onclick="PersianDatePicker.Show(this,'@ViewData["MyDate"]')">
+                                <span asp-validation-for="_viewModel.BirthDate" class="text-danger"></span>
+                            </div>
                         </div>
                     </div>
 
@@ -44,3 +56,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/picker/persiandatepicker.min.js"></script>
+}

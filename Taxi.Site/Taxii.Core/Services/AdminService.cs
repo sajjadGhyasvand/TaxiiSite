@@ -576,16 +576,17 @@ namespace Taxii.Core.Services
             _context.SaveChanges();
         }
 
-        public bool UpdateUser(Guid id, UserViewModel viewModel)
+        public bool UpdateUser(Guid id, UserEditViewModel viewModel)
         {
             User user = _context.Users.Find(id);
+            UserDetail userDetail = _context.UserDetails.Find(id);
             if (user != null)
             {
                 user.RoleId = viewModel.RoleId;
                 user.IsActive = viewModel.IsActive;
-
                 user.UserName = viewModel.UserName;
-
+                userDetail.FullName = viewModel.FullName;
+                userDetail.BirthDate = viewModel.BirthDate;
                 if (GetRoleId(viewModel.RoleId) == "driver")
                 {
                     if (!_context.Drivers.Any(d => d.UserId == id))
@@ -620,7 +621,8 @@ namespace Taxii.Core.Services
 
         public bool UpdateDriverProp(Guid id, DriverPropViewModel driverProp)
         {
-            if (driverProp.Avatar.FileName != "")
+            Driver driver = _context.Drivers.Find(id);
+            if (driverProp.Avatar.FileName != null)
             {
                 string strExt = Path.GetExtension(driverProp.Avatar.FileName);
                 if (strExt != ".jpg")
@@ -634,17 +636,32 @@ namespace Taxii.Core.Services
                 {
                     driverProp.Avatar.CopyTo(stream);
                 }
-                Driver driver = _context.Drivers.Find(id);
+                if (driver.Avatar != null)
+                {
+                    File.Delete("wwwroot/img/driver" + driver.Avatar);
+                }
                 driver.Avatar = driverProp.AvatarName;
                 driver.NationalCOde = driverProp.NationalCode;
                 driver.Address = driverProp.Address;
                 driver.Tel = driverProp.Tel;
 
                 _context.SaveChanges();
+
+
                 return true;
             }
             else
             {
+                if (driver.Avatar != null)
+                {
+                    driver.NationalCOde = driverProp.NationalCode;
+                    driver.Address = driverProp.Address;
+                    driver.Tel = driverProp.Tel;
+
+                    _context.SaveChanges();
+
+                    return true;
+                }
                 return false;
             }
         }
@@ -652,6 +669,50 @@ namespace Taxii.Core.Services
         public async Task<Driver> GetDriver(Guid id)
         {
             return await _context.Drivers.FindAsync(id);
+        }
+
+        public bool UpdateDriverCertificated(Guid id, DriverimgViewModel viewModel)
+        {
+           Driver driver = _context.Drivers.Find(id);
+            if (viewModel.Img != null)
+            {
+                string strExt = Path.GetExtension(viewModel.Img.FileName);
+                if (strExt != ".jpg")
+                {
+                    return false;
+                }
+                string filePath = "";
+                viewModel.ImgNAme = CodeGenerators.GetFileName() + strExt;
+                filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/driver", viewModel.ImgNAme);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    viewModel.Img.CopyTo(stream);
+                }
+                driver.CarImg = viewModel.ImgNAme;
+                driver.IsConfirm = viewModel.IsConfirm;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateDriverCar(Guid id, DriverCarViewModel viewModel)
+        {
+            Driver driver = _context.Drivers.Find(id);
+
+
+            driver.CarCode = viewModel.CarCode;
+            driver.ColorId = viewModel.ColorId;
+            driver.CarId = viewModel.CarId;
+
+            _context.SaveChanges();
+
+            return true;
+        }
+
+        public async Task<UserDetail> GetUserDetail(Guid id)
+        {
+            return await _context.UserDetails.FindAsync(id);
         }
     }
 }
