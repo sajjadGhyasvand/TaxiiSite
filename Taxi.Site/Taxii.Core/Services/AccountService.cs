@@ -25,12 +25,14 @@ namespace Taxii.Core.Services
         public async Task<User> ActiveUser(ActiveViewModel viewModel)
         {
             string pass = HashEncode.GetHashCode(HashEncode.GetHashCode(viewModel.Code));
-            User user = _context.Users.SingleOrDefault(u => u.Password == pass);
+            User user = _context.Users.SingleOrDefault(u => u.Password == viewModel.Code);
             var code = CodeGenerators.GetActiveCode();
             if (user != null)
             {
                 user.IsActive = true;
-                user.Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code));
+                /*user.Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code));*/
+                user.Password = CodeGenerators.GetActiveCode();
+
                 _context.SaveChanges();
             }
             return await Task.FromResult(user);
@@ -39,6 +41,12 @@ namespace Taxii.Core.Services
         public bool CheckMobileNumber(string userName)
         {
             return _context.Users.Any(u => u.UserName == userName);
+        }
+
+        public bool CheckUserRole(string roleName, string userName)
+        {
+            Role myRole = _context.Roles.SingleOrDefault(r => r.Name == roleName);
+            return _context.Users.Any(u => u.UserName == userName && u.RoleId == myRole.Id);
         }
 
         public void Dispose()
@@ -129,7 +137,8 @@ namespace Taxii.Core.Services
                 {
                     IsActive = false,
                     Id = CodeGenerators.GetId(),
-                    Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code)),
+                   /* Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code)),*/
+                    Password = code,
                     RoleId = GetRoleByName("user"),
                     Token = "ثبت نشده",
                     UserName = viewModel.UserName
