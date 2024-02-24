@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Taxii.Core.Interfaces;
+using Taxii.Core.Scope;
 using Taxii.Core.Services;
 using Taxii.DataLayer.Context;
 
@@ -31,6 +33,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddTransient<IAccountService,AccountService>();
 builder.Services.AddTransient<IAdminService,AdminService>();
+builder.Services.AddTransient<IPanelService,PanelService>();
+builder.Services.AddScoped<SiteLayoutScope>();
 
 #endregion
 var app = builder.Build();

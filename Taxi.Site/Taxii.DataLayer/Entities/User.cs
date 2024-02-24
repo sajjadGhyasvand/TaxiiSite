@@ -29,11 +29,14 @@ namespace Taxii.DataLayer.Entities
         [Display(Name = " کیف پول")]
         public long? Wallet { get; set; }
 
+
         #region Relations
         public virtual Role Role { get; set; }
         public virtual UserDetail UserDetail { get; set; }
         public virtual Driver Driver { get; set; }
-
+        public virtual ICollection<Factor> Factors { get; set; }
         #endregion
+
+
     } 
 }

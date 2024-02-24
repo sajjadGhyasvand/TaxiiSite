@@ -50,7 +50,7 @@ td,
 button.close {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  font-family: "B Yekan",Tahoma;
+  font-family: 'B Yekan',Tahoma;
   font-weight: 400;
 }
 
@@ -251,7 +251,7 @@ input:focus {
   margin: 10px 10px;
   color: #FFFFFF;
   line-height: 20px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
 }
 .sidebar .logo .simple-text {
   text-transform: uppercase;
@@ -322,7 +322,7 @@ body > .navbar-collapse .logo p {
   margin: 10px 10px;
   color: #FFFFFF;
   line-height: 20px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
 }
 .sidebar .logo .simple-text,
 body > .navbar-collapse .logo .simple-text {

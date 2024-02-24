@@ -47,7 +47,7 @@ namespace Taxi.Site.Pages.Account
                 };
                 await HttpContext.SignInAsync(principal, properties);
                 // شناسایی  و راهنمایی به پنل 
-                
+                return RedirectToPage("/Panel/Index");
             }
 
             ViewData["IsError"] = "true";

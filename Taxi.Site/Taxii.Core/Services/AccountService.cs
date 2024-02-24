@@ -24,8 +24,9 @@ namespace Taxii.Core.Services
 
         public async Task<User> ActiveUser(ActiveViewModel viewModel)
         {
-            string pass = HashEncode.GetHashCode(HashEncode.GetHashCode(viewModel.Code));
-            User user = _context.Users.SingleOrDefault(u => u.Password == viewModel.Code);
+            /*string pass = HashEncode.GetHashCode(HashEncode.GetHashCode(viewModel.Code));*/
+            string pass = viewModel.Code;
+            User user = _context.Users.SingleOrDefault(u => u.Password == pass);
             var code = CodeGenerators.GetActiveCode();
             if (user != null)
             {
@@ -75,7 +76,8 @@ namespace Taxii.Core.Services
                 {
                     IsActive = false,
                     Id = CodeGenerators.GetId(),
-                    Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code)),
+                    /*Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code)),*/
+                    Password = code,
                     RoleId = GetRoleByName("driver"),
                     /*Token = "ثبت نشده",*/
                     UserName = viewModel.UserName
@@ -100,7 +102,7 @@ namespace Taxii.Core.Services
                 _context.SaveChanges();
                 try
                 {
-                    SmsSender.VerifySend(user.UserName, "testi", code);
+                   /* SmsSender.VerifySend(user.UserName, "testi", code);*/
                 }
                 catch (Exception)
                 {
@@ -113,10 +115,11 @@ namespace Taxii.Core.Services
             {
                 User user = await GetUser(viewModel.UserName);
                 string code = CodeGenerators.GetActiveCode();
-                UpdateUserPassword(user.Id, HashEncode.GetHashCode(HashEncode.GetHashCode(code)));
+                /*UpdateUserPassword(user.Id, HashEncode.GetHashCode(HashEncode.GetHashCode(code)));*/
+                UpdateUserPassword(user.Id, code);
                 try
                 {
-                    SmsSender.VerifySend(user.UserName, "testi", code);
+                    /*SmsSender.VerifySend(user.UserName, "testi", code);*/
                 }
                 catch (Exception)
                 {
@@ -156,7 +159,7 @@ namespace Taxii.Core.Services
                 _context.SaveChanges();
                 try
                 {
-                    SmsSender.VerifySend(user.UserName, "testi", code);
+                  /*  SmsSender.VerifySend(user.UserName, "testi", code);*/
                 }
                 catch (Exception)
                 {
@@ -169,10 +172,11 @@ namespace Taxii.Core.Services
             {
                 User user = await GetUser(viewModel.UserName);
                 string code = CodeGenerators.GetActiveCode();
-                UpdateUserPassword(user.Id, HashEncode.GetHashCode(HashEncode.GetHashCode(code)));
+                /*UpdateUserPassword(user.Id, HashEncode.GetHashCode(HashEncode.GetHashCode(code)));*/
+                UpdateUserPassword(user.Id, code);
                 try
                 {
-                    SmsSender.VerifySend(user.UserName, "testi", code);
+                   /* SmsSender.VerifySend(user.UserName, "testi", code);*/
                 }
                 catch (Exception)
                 {
@@ -187,7 +191,8 @@ namespace Taxii.Core.Services
         public void UpdateUserPassword(Guid Id, string code)
         {
             User user = _context.Users.Find(Id);
-            user.Password = HashEncode.GetHashCode(CodeGenerators.GetActiveCode());
+            /*user.Password = HashEncode.GetHashCode(HashEncode.GetHashCode(code));*/
+            user.Password = code;
             _context.SaveChanges();
         }
     }

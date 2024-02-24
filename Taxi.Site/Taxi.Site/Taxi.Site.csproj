@@ -26,4 +26,15 @@
     <Folder Include="wwwroot\img\Driver\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\dashboard\bootstrap-checkbox-radio-switch.js" />
+    <None Include="wwwroot\js\dashboard\bootstrap-notify.js" />
+    <None Include="wwwroot\js\dashboard\bootstrap-select.js" />
+    <None Include="wwwroot\js\dashboard\bootstrap.min.js" />
+    <None Include="wwwroot\js\dashboard\chartist.min.js" />
+    <None Include="wwwroot\js\dashboard\demo.js" />
+    <None Include="wwwroot\js\dashboard\jquery-1.10.2.js" />
+    <None Include="wwwroot\js\dashboard\light-bootstrap-dashboard.js" />
+  </ItemGroup>
+
 </Project>
