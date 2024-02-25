@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Taxii.Core.Generatiors;
 using Taxii.Core.Interfaces;
 using Taxii.Core.VireModels.Panel;
 using Taxii.DataLayer.Context;
@@ -46,6 +47,49 @@ namespace Taxii.Core.Services
                 return true;
             }
             return false;
+        }
+        public bool UpdateFactor(Guid userid, string orderNumber, long price)
+        {
+            Factor factor = _context.Factors.SingleOrDefault(f => f.UserId == userid && f.BankName == null);
+
+            if (factor != null)
+            {
+                factor.OrderNumber = orderNumber;
+                factor.Price = Convert.ToInt32(price);
+
+                _context.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+        public void AddFactor(Factor factor)
+        {
+            _context.Factors.Add(factor);
+            _context.SaveChanges();
+        }
+        public async Task<Factor> GetFactor(Guid id)
+        {
+            return await _context.Factors.FindAsync(id);
+        }
+
+        public Guid GetFactorById(string orderNumber)
+        {
+            return _context.Factors.SingleOrDefault(f => f.OrderNumber == orderNumber).Id;
+        }
+        public void UpdatePayment(Guid id, string date, string time, string desc, string bank, string trace, string refId)
+        {
+            Factor factor = _context.Factors.Find(id);
+
+            factor.Date = DateTimeGenerators.GetShamsiDate();
+            factor.Time = DateTimeGenerators.GetShamsiTime();
+            factor.Desc = desc;
+            factor.TraceNumber = trace;
+            factor.BankName = bank;
+            factor.RefNumber = refId;
+
+            _context.SaveChanges();
         }
     }
 }

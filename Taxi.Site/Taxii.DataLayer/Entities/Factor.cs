@@ -21,7 +21,7 @@ namespace Taxii.DataLayer.Entities
         public string? Time { get; set; }
         [Display(Name = "شماره سفارش")]
         [MaxLength(8)]
-        public long? OrderNumber { get; set; }
+        public string? OrderNumber { get; set; }
         [Display(Name = "  مبلغ ")]
         public int? Price  { get; set; }
         [Display(Name = "درگاه")]
@@ -33,7 +33,7 @@ namespace Taxii.DataLayer.Entities
         [Display(Name = "  شماره مرجع ")]
         [MaxLength(50)]
         public string? TraceNumber  { get; set; }
-
+        public string? Desc { get; set; }
         public virtual User User { get; set; }
     }
 }
