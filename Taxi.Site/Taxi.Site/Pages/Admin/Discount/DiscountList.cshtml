@@ -1,0 +1,93 @@
+﻿@page "admin/discounts"
+@model Taxi.Site.Pages.Admin.Discount.DiscountListModel
+@{
+    ViewData["Title"] = "نمایش تخفیفات";
+    Layout = "_DashBoarddLayout";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <div class="row">
+                    <h4 class="col-md-8 title">تخفیفات</h4>
+                    <a class="col-md-2  category pull-left btn btn-success" asp-page="AddDiscount">جدید</a>
+                </div>
+                <div class="clearfix"></div>
+                <br />
+                <input type="text" class="form-control" placeholder="جستجو خودرو ..." id="mySearch" />
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>نام</th>
+                        <th>کد</th>
+                        <th>شروع </th>
+                        <th>انقضا</th>
+                        <th>عملیات</th>
+                        <th>عملیات</th>
+                    </tr>
+                    <tbody id="myTable">
+                        @foreach (var discount in Model.DiscountList)
+                        {
+                            <tr>
+                                <td>@discount.Name</td>
+                                <td>@discount.Code</td>
+                                <td>@discount.Start</td>
+                                <td>@discount.Expire</td>
+                                <td>
+                                    <a href="/admin/Discount/EditDiscount/@discount.Id" class="btn btn-xs btn-warning">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a asp-page-handler="Delete" id="deleteButton" asp-route-id="@discount.Id" class="btn btn-xs btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#mySearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('deleteButton').addEventListener('click', function (e) {
+            e.preventDefault();
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: "تایید حذف",
+                text: "آیا از حذف این مقدار اطمینان دارید",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "بله",
+                cancelButtonText: "لغو",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = e.target.href;
+                }
+            });
+        });
+    </script>
+}

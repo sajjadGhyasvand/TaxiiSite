@@ -20,6 +20,11 @@ namespace Taxii.Core.Services
         {
             _context = context;
         }
+
+        public PanelService()
+        {
+        }
+
         public void Dispose()
         {
             if (_context != null)
@@ -81,6 +86,7 @@ namespace Taxii.Core.Services
         public void UpdatePayment(Guid id, string date, string time, string desc, string bank, string trace, string refId)
         {
             Factor factor = _context.Factors.Find(id);
+            User user = _context.Users.Find(factor.UserId);
 
             factor.Date = DateTimeGenerators.GetShamsiDate();
             factor.Time = DateTimeGenerators.GetShamsiTime();
@@ -88,6 +94,8 @@ namespace Taxii.Core.Services
             factor.TraceNumber = trace;
             factor.BankName = bank;
             factor.RefNumber = refId;
+
+            user.Wallet += factor.Price;
 
             _context.SaveChanges();
         }

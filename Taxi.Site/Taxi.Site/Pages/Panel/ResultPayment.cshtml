@@ -7,7 +7,7 @@
 
 <h1 class="text-center">نتیجه تراکنش</h1>
 
-<div class="row">
+<div class="row" style="margin-bottom:30px">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
         <form asp-action="Payment">
@@ -21,19 +21,19 @@
                 @if (Model.factor.BankName == null)
                 {
                     <div class="alert alert-danger">
-                        <h4 class="text-center">پرداخت انجام نشد</h4>
+                        <h5 class="text-center">پرداخت انجام نشد</h5>
                         <br />
-                        <h4 class="text-center">شماره سفارش : @Model.factor.OrderNumber</h4>
+                        <p class="text-center">شماره سفارش : @Model.factor.OrderNumber</p>
                     </div>
                 } 
                 else
                 {
                     <div class="alert alert-success">
-                        <h4 class="text-center">پرداخت با موفقیت انجام شد</h4>
+                        <h5 class="text-center">پرداخت با موفقیت انجام شد</h5>
                         <br />
-                        <h4 class="text-center">شماره سفارش : @Model.factor.OrderNumber</h4>
+                        <p class="text-center">شماره سفارش : @Model.factor.OrderNumber</p>
                         <br />
-                        <h4 class="text-center">شماره پیگیری : @Model.factor.RefNumber</h4>
+                        <p class="text-center">شماره پیگیری : @Model.factor.RefNumber</p>
                     </div>
                 }
 
