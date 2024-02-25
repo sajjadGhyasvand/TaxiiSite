@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Taxii.Core.Generatiors;
 using Taxii.Core.Interfaces;
 using Taxii.Core.VireModels.Admin;
 
@@ -16,10 +17,12 @@ namespace Taxi.Site.Pages.Admin.Discount
         }
         public IActionResult OnGet()
         {
+            ViewData["MyDate"] = DateTimeGenerators.GetShamsiDate();
             return Page();
         }
         public IActionResult OnPost()
         {
+            ViewData["MyDate"] = DateTimeGenerators.GetShamsiDate();
             if (ModelState.IsValid)
             {
                 _adminService.AddDiscount(_viewModel);
