@@ -26,5 +26,7 @@ namespace Taxii.DataLayer.Context
         public DbSet<MonthPriceType> MonthPriceTypes { get; set; }
         public DbSet<Humidity> Humidities { get; set; }
         public DbSet<Temperature> Temperatures { get; set; }
+        public DbSet<Factor> Factors { get; set; }
+        public DbSet<Discount> Discounts { get; set; }
     }
 }

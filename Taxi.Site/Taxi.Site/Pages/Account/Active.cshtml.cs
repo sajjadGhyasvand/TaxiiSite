@@ -1,6 +1,9 @@
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Claims;
 using Taxii.Core.Interfaces;
 using Taxii.Core.VireModels;
 using Taxii.DataLayer.Entities;
@@ -29,7 +32,22 @@ namespace Taxi.Site.Pages.Account
             if (user != null)
             {
             ViewData["IsError"] = "false";
-              // ����  
+
+                //احراز هویت ورود به داشبورد 
+                var claims = new List<Claim>()
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserName)
+                };
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+                var properties = new AuthenticationProperties()
+                {
+                    IsPersistent = true,
+                };
+                await HttpContext.SignInAsync(principal, properties);
+                // شناسایی  و راهنمایی به پنل 
+                return RedirectToPage("/Panel/Index");
             }
 
             ViewData["IsError"] = "true";

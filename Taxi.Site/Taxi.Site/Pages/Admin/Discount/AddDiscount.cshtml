@@ -1,0 +1,74 @@
+﻿@page
+@model Taxi.Site.Pages.Admin.Discount.AddDiscountModel
+@{
+    ViewData["Title"] = "  ثبت تخفیف";
+    Layout = "_DashBoarddLayout";
+}
+
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">افزودن تخفیف </h4>
+            </div>
+            <div class="content">
+                <form method="post">
+                    <div class="row">
+                        @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Name">عنوان تخفیف </label>
+                                <input asp-for="_viewModel.Name" type="text" class="form-control" placeholder="عنوان" />
+                                <span asp-validation-for="_viewModel.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Code">کد تخفیف </label>
+                                <input asp-for="_viewModel.Code" type="text" class="form-control" placeholder="کد تخفیف">
+                                <span asp-validation-for="_viewModel.Code" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Start" placeholder="تاریخ شروع " >شروع تخفیف </label>
+                                <input asp-for="_viewModel.Start" type="text" class="form-control" onclick="PersianDatePicker.Show(this,'@ViewData["MyDate"].ToString()')" />
+                                <span asp-validation-for="_viewModel.Start" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Expire" placeholder="تاریخ انقضا  " >پایان تخفیف </label>
+                                <input asp-for="_viewModel.Expire" type="text" class="form-control" onclick="PersianDatePicker.Show(this,'@ViewData["MyDate"].ToString()')">
+                                <span asp-validation-for="_viewModel.Expire" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Price">قیمت تخفیف </label>
+                                <input asp-for="_viewModel.Price" type="number" value="0" class="form-control">
+                                <span asp-validation-for="_viewModel.Price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Percent">درصد تخفیف </label>
+                                <input asp-for="_viewModel.Percent" type="number" value="0" min="0" max="100" class="form-control">
+                                <span asp-validation-for="_viewModel.Percent" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_viewModel.Description">توضیحات  </label>
+                                <textarea asp-for="_viewModel.Description" type="number" min="0" max="100" value="0" class="form-control"></textarea>
+                                <span asp-validation-for="_viewModel.Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-fill">ثبت</button>
+                    <a href="/admin/Discounts" class="btn btn-danger btn-fill">
+                        بازگشت
+                    </a>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/sweet.js"></script>
+
+    <script src="~/picker/PersianDatePicker.min.js"></script>
+}

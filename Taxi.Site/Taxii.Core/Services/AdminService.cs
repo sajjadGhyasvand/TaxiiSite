@@ -673,7 +673,7 @@ namespace Taxii.Core.Services
 
         public bool UpdateDriverCertificated(Guid id, DriverimgViewModel viewModel)
         {
-           Driver driver = _context.Drivers.Find(id);
+            Driver driver = _context.Drivers.Find(id);
             if (viewModel.Img != null)
             {
                 string strExt = Path.GetExtension(viewModel.Img.FileName);
@@ -713,6 +713,69 @@ namespace Taxii.Core.Services
         public async Task<UserDetail> GetUserDetail(Guid id)
         {
             return await _context.UserDetails.FindAsync(id);
+        }
+
+        public async Task<List<Discount>> GetDiscounts()
+        {
+            return await _context.Discounts.OrderBy(d => d.Name).ToListAsync();
+        }
+
+        public async Task<Discount> GetDiscountById(Guid id)
+        {
+            return await _context.Discounts.FindAsync(id);
+        }
+
+        public void AddDiscount(DiscountAdminViewModel viewModel)
+        {
+            Discount discount = new Discount()
+            {
+                Code = viewModel.Code,
+                Description = viewModel.Description,
+                Expire = viewModel.Expire,
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                Percent = viewModel.Percent,
+                Price = viewModel.Price,
+                Start = viewModel.Start,
+            };
+            _context.Discounts.Add(discount);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateDiscount(Guid id, DiscountAdminViewModel viewModel)
+        {
+            Discount discount = _context.Discounts.Find(id);
+
+
+            if (discount != null)
+            {
+                discount.Name = viewModel.Name;
+                discount.Price = viewModel.Price;
+                discount.Start = viewModel.Start;
+                discount.Expire = viewModel.Expire;
+                discount.Code = viewModel.Code;
+                discount.Description = viewModel.Description;
+                discount.Price = viewModel.Price;
+                discount.Percent = viewModel.Percent;
+
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public bool DeleteDiscount(Guid id)
+        {
+            Discount discount = _context.Discounts.Find(id);
+            if (discount != null)
+            {
+            _context.Discounts.Remove(discount);
+            _context.SaveChanges();
+            return true;
+            }
+            return false;
         }
     }
 }

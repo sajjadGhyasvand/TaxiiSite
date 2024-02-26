@@ -100,5 +100,13 @@ namespace Taxii.Core.Interfaces
         bool UpdateDriverCertificated(Guid id,DriverimgViewModel viewModel);
         bool UpdateDriverCar(Guid id, DriverCarViewModel viewModel);
         #endregion
+
+        #region Discount
+        Task<List<Discount>> GetDiscounts();
+        Task<Discount> GetDiscountById(Guid id);
+        void AddDiscount(DiscountAdminViewModel viewModel);
+        bool UpdateDiscount(Guid id, DiscountAdminViewModel viewModel);
+        bool DeleteDiscount(Guid id);
+        #endregion
     }
 }
