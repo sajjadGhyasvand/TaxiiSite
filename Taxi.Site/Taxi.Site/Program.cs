@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Taxii.Core.Interfaces;
 using Taxii.Core.Services;
@@ -12,6 +13,22 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+#region Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+}).AddCookie(options =>
+{
+    options.LoginPath = "/Account/Register";
+    options.LoginPath = "/Account/SignOut";
+    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+});
+#endregion
+
 #region IoC
 
 builder.Services.AddTransient<IAccountService,AccountService>();
@@ -33,6 +50,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
