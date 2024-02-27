@@ -771,11 +771,22 @@ namespace Taxii.Core.Services
             Discount discount = _context.Discounts.Find(id);
             if (discount != null)
             {
-            _context.Discounts.Remove(discount);
-            _context.SaveChanges();
-            return true;
+                _context.Discounts.Remove(discount);
+                _context.SaveChanges();
+                return true;
             }
             return false;
         }
+
+        public int? WeeklyFactor(string date)
+        {
+            if (!_context.Factors.Any(f => f.RefNumber != null && f.Date == date))
+                return 0;
+
+            return _context.Factors.Where(f => f.RefNumber != null && f.Date == date).ToList().Sum(f=>f.Price);
+        }
+
+
+
     }
 }

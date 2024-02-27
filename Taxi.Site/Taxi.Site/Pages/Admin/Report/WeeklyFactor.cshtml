@@ -1,0 +1,45 @@
+﻿@page "/admin/WeeklyFactor"
+
+ @model Taxi.Site.Pages.Admin.Report.WeeklyFactorModel 
+
+@{
+    ViewData["Title"] = "  پرداخت های  هفتگی  ";
+    Layout = "_DashBoarddLayout";
+
+
+    var xlabels = Newtonsoft.Json.JsonConvert.SerializeObject(@Model.charts.Select(x => x.Label).ToList());
+    var yvalues = Newtonsoft.Json.JsonConvert.SerializeObject(@Model.charts.Select(x => x.Value).ToList());
+    var zcolors = Newtonsoft.Json.JsonConvert.SerializeObject(@Model.charts.Select(x => x.Color).ToList());
+}
+<div class="col-lg-12"></div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script>
+        var ctx = document.getElementById('chart').getContext('2d');
+
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(xlabels),
+                datasets: [{
+                    label: "پرداخت های هفتگی",
+                    data: @Html.Raw(yvalues),
+                    backgroundColor: @Html.Raw(zcolors),
+                    borderWodth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    
+}

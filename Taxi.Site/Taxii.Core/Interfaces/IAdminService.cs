@@ -108,5 +108,9 @@ namespace Taxii.Core.Interfaces
         bool UpdateDiscount(Guid id, DiscountAdminViewModel viewModel);
         bool DeleteDiscount(Guid id);
         #endregion
+
+        #region Report
+        int? WeeklyFactor(string date);
+        #endregion
     }
 }
