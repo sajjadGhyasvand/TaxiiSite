@@ -111,6 +111,9 @@ namespace Taxii.Core.Interfaces
 
         #region Report
         int? WeeklyFactor(string date);
+        int? MonthlyFactor(string month);
+        int? WeeklyRegister(string date);   
+        int? MonthlyRegister(string month);   
         #endregion
     }
 }

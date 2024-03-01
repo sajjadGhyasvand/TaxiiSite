@@ -1,21 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
-using Taxi.Site.Pages.Admin.Discount;
 using Taxii.Core.Generatiors;
 using Taxii.Core.Interfaces;
 using Taxii.Core.VireModels;
-using Taxii.Core.VireModels.Admin;
 
 namespace Taxi.Site.Pages.Admin.Report
 {
-    public class WeeklyFactorModel : PageModel
+    public class WeeklyRegisterModel : PageModel
     {
         private IAdminService _adminService;
         private PersianCalendar pc = new();
         /*public IEnumerable<ChartViewModel> charts { get; set; }*/
         public List<ChartViewModel> charts { get; set; }
-        public WeeklyFactorModel(IAdminService adminService)
+        public WeeklyRegisterModel(IAdminService adminService)
         {
             _adminService = adminService;
         }
@@ -23,7 +21,7 @@ namespace Taxi.Site.Pages.Admin.Report
         {
             charts = new();
             string strToday = DateTimeGenerators.GetShamsiDate();
-            int Ayear = Convert.ToInt32(strToday.Substring(0,4));
+            int Ayear = Convert.ToInt32(strToday.Substring(0, 4));
             int Amonth = Convert.ToInt32(strToday.Substring(5, 2));
             int Aday = Convert.ToInt32(strToday.Substring(8, 2));
 
@@ -32,7 +30,7 @@ namespace Taxi.Site.Pages.Admin.Report
             for (int i = 0; i <= 6; i++)
             {
                 DateTime dtA = pc.ToDateTime(Ayear, Amonth, Aday, 0, 0, 0, 0);
-                if(i == 0)
+                if (i == 0)
                 {
                     dtA = dtA.AddDays(i);
                 }
@@ -46,10 +44,10 @@ namespace Taxi.Site.Pages.Admin.Report
                 ChartViewModel chart = new ChartViewModel()
                 {
                     Label = strEndDAte,
-                    Value = _adminService.WeeklyFactor(strEndDAte),
+                    Value = _adminService.WeeklyRegister(strEndDAte),
                     Color = ColorGenerators.SelectColorCode(),
                 };
-                charts.Add(chart);  
+                charts.Add(chart);
             }
             return Page();
         }

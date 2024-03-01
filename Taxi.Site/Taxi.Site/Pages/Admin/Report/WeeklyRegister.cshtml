@@ -1,9 +1,9 @@
-﻿@page "/admin/WeeklyFactor"
+﻿@page "/admin/WeeklyRegister"
+@model Taxi.Site.Pages.Admin.Report.WeeklyRegisterModel
 
- @model Taxi.Site.Pages.Admin.Report.WeeklyFactorModel 
 
 @{
-    ViewData["Title"] = "  پرداخت های  هفتگی  ";
+    ViewData["Title"] = "  عضویت های  هفتگی  ";
     Layout = "_DashBoarddLayout";
 
 
@@ -26,7 +26,7 @@
             data: {
                 labels: @Html.Raw(xlabels),
                 datasets: [{
-                    label: "پرداخت های هفتگی",
+                    label: "عضویت های هفتگی",
                     data: @Html.Raw(yvalues),
                     backgroundColor: @Html.Raw(zcolors),
                     borderWodth: 1

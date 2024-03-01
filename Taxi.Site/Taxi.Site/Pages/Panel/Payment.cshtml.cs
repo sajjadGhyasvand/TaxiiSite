@@ -54,12 +54,10 @@ namespace Taxi.Site.Pages.Panel
             Guid factorID = _panelService.GetFactorById(orderNumber);
 
             var payment = new ZarinpalSandbox.Payment(Convert.ToInt32(_viewModel.Wallet));
-            var result = payment.PaymentRequest("تراکنش جدید", "https://localhost:7296/Panel/PaymentCallBack/" + factorID);
+            var result = payment.PaymentRequest("تراکنش جدید", "http://localhost:5086/Panel/PaymentCallBack/" + factorID);
 
             if (result.Result.Status == 100)
-            {
                 return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + result.Result.Authority);
-            }
             return Redirect("/Panel/ResultPayment/" + factorID);
         }
     }
