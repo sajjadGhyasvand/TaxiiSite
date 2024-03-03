@@ -113,7 +113,19 @@ namespace Taxii.Core.Interfaces
         int? WeeklyFactor(string date);
         int? MonthlyFactor(string month);
         int? WeeklyRegister(string date);   
-        int? MonthlyRegister(string month);   
+        int? MonthlyRegister(string month);
+        #endregion
+
+        #region Transact
+        Task<List<Transact>> GetTransacts();
+        void DeleteTransact(Guid id);
+        Task<List<TransactRate>> GetTransactRates(Guid id);
+
+        int? WeeklyTransact(string date);
+        Task<List<Transact>> LastTransact();
+        Task<List<Transact>> FillTransactInProcess(string date);
+        Task<List<Transact>> FillCancelTransact(string date);
+
         #endregion
     }
 }

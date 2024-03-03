@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Taxi.Site.Hubs;
 using Taxii.Core.Interfaces;
 using Taxii.Core.Scope;
 using Taxii.Core.Services;
@@ -10,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
+builder.Services.AddSignalR();
 builder.Services.AddDbContext<DataBaseContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -35,6 +36,7 @@ builder.Services.AddTransient<IAccountService,AccountService>();
 builder.Services.AddTransient<IAdminService,AdminService>();
 builder.Services.AddTransient<IPanelService,PanelService>();
 builder.Services.AddScoped<SiteLayoutScope>();
+builder.Services.AddScoped<TransactScope>();
 
 #endregion
 var app = builder.Build();
@@ -51,10 +53,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<ChatHub>("/chatHub");
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapRazorPages();
 
 app.Run();

@@ -35,6 +35,7 @@ namespace Taxii.DataLayer.Entities
         public virtual UserDetail UserDetail { get; set; }
         public virtual Driver Driver { get; set; }
         public virtual ICollection<Factor> Factors { get; set; }
+        public virtual ICollection<UserAddress> UserAddresses { get; set; }
         #endregion
 
 

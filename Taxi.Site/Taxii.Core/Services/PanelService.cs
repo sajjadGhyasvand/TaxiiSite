@@ -9,6 +9,7 @@ using Taxii.Core.Interfaces;
 using Taxii.Core.VireModels.Panel;
 using Taxii.DataLayer.Context;
 using Taxii.DataLayer.Entities;
+using Taxii.DataLayer.Enum;
 
 namespace Taxii.Core.Services
 {
@@ -98,6 +99,154 @@ namespace Taxii.Core.Services
             user.Wallet += factor.Price;
 
             _context.SaveChanges();
+        }
+
+        public async Task<List<UserAddress>> GetUserAddresses(Guid id)
+        {
+            return await _context.UserAddresses.Where(a => a.UserId == id).ToListAsync();
+        }
+        public void AddAddress(Guid id, UserAddressViewModel viewModel)
+        {
+            UserAddress addresse = new UserAddress()
+            {
+                Desc = viewModel.Desc,
+                Id = CodeGenerators.GetId(),
+                Lat = viewModel.Lat,
+                Lng = viewModel.Lng,
+                Title = viewModel.Title,
+                UserId = id
+            };
+
+            _context.UserAddresses.Add(addresse);
+            _context.SaveChanges();
+        }
+
+        public float GetHumidityPercent(double id)
+        {
+            var hum = _context.Humidities.FirstOrDefault(x => x.End >= id && x.Start <= id);
+
+            if (hum == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToSingle(hum.Percent / 100);
+            }
+        }
+        public float GetTempPercent(double id)
+        {
+            var temp = _context.Temperatures.FirstOrDefault(x => x.End >= id && x.Start <= id);
+
+            if (temp == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToSingle(temp.Percent / 100);
+            }
+        }
+
+        public Transact AddTransact(TransactViewModel viewModel)
+        {
+            Transact transact = new Transact()
+            {
+                Id = CodeGenerators.GetId(),
+                Date = DateTimeGenerators.GetShamsiDate(),
+                StartTime = DateTimeGenerators.GetShamsiTime(),
+                Discount = 0,
+                DriverId = null,
+                DriverRate = false,
+                EndAddress = viewModel.EndAddress,
+                EndLat = viewModel.EndLat,
+                EndLng = viewModel.EndLng,
+                EndTime = null,
+                Fee = viewModel.Fee,
+                Total = viewModel.Fee,
+                IsCash = false,
+                Rate = 0,
+                StartAddress = viewModel.StartAddress,
+                StartLat = viewModel.StartLat,
+                StartLng = viewModel.StartLng,
+                Status = 0,
+                UserId = viewModel.UserId
+            };
+
+            _context.Transacts.Add(transact);
+            _context.SaveChanges();
+
+            return transact;
+        }
+        public async Task<List<Transact>> GetDriverTransacts(Guid id)
+        {
+            return await _context.Transacts.Where(x => x.DriverId == id && x.Status == TransactStatus.Success).OrderByDescending(x => x.Date)
+                .ToListAsync();
+        }
+        public async Task<Transact> GetTransactById(Guid id)
+        {
+            return await _context.Transacts.FindAsync(id);
+        }
+        public async Task<List<Transact>> GetUserTransacts(Guid id)
+        {
+            return await _context.Transacts.Where(x => x.UserId == id && x.Status == TransactStatus.Success).OrderByDescending(x => x.Date)
+                .ToListAsync();
+        }
+
+        public void UpdateRate(Guid id, int rate)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.Rate = rate;
+            _context.SaveChanges();
+        }
+
+
+        public long GetPriceType(double id)
+        {
+            var priceType = _context.PriceTypes.FirstOrDefault(x => x.End >= id && x.Start <= id);
+
+            if (priceType == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return priceType.Price;
+            }
+        }
+
+
+
+        public void UpdateStatus(Guid id, TransactStatus status)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.Status = status;
+            _context.SaveChanges();
+        }
+       
+
+        public void UpdateDriver(Guid id, Guid driverId)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.DriverId = driverId;
+            _context.SaveChanges();
+        }
+
+        public void UpdateDriverRate(Guid id, bool rate)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.DriverRate = rate;
+            _context.SaveChanges();
+        }
+
+
+        public void UpdatePayments(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

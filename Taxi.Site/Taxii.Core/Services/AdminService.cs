@@ -12,6 +12,7 @@ using Taxii.Core.Securities;
 using Taxii.Core.VireModels.Admin;
 using Taxii.DataLayer.Context;
 using Taxii.DataLayer.Entities;
+using Taxii.DataLayer.Enum;
 
 namespace Taxii.Core.Services
 {
@@ -808,6 +809,52 @@ namespace Taxii.Core.Services
             if (_context.Users.Include(u=>u.UserDetail).Any(f => f.IsActive == true && f.UserDetail.Date.Substring(5, 2) == month && f.UserDetail.Date.Substring(0, 4) == strYear))
                 return 0;
             return  _context.Users.Include(u => u.UserDetail).Where(f => f.IsActive == true && f.UserDetail.Date.Substring(5, 2) == month && f.UserDetail.Date.Substring(0, 4) == strYear).Count();
+        }
+
+        public async Task<List<Transact>> GetTransacts()
+        {
+            return await _context.Transacts.OrderByDescending(x => x.Date).ThenByDescending(x => x.StartTime).ToListAsync();
+        }
+
+        public void DeleteTransact(Guid id)
+        {
+            var transact = _context.Transacts.Find(id);
+
+            _context.Transacts.Remove(transact);
+            _context.SaveChanges();
+        }
+        public async Task<List<TransactRate>> GetTransactRates(Guid id)
+        {
+            return await _context.TransactRates.Where(x => x.TransactId == id).ToListAsync();
+        }
+
+        public int? WeeklyTransact(string date)
+        {
+            if (!_context.Transacts.Any(x => x.Status == 2 && x.Date == date))
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt32(_context.Transacts.Where(x => x.Status == TransactStatus.Success && x.Date == date).Sum(x => x.Total));
+            }
+        }
+
+        public async Task<List<Transact>> LastTransact()
+        {
+            return await _context.Transacts.Include(x => x.User).Where(x => x.Status == TransactStatus.Success).OrderByDescending(x => x.Date).ThenByDescending(x => x.EndTime).Take(5).ToListAsync();
+        }
+
+        public async Task<List<Transact>> FillTransactInProcess(string date)
+        {
+            return await _context.Transacts.Include(x => x.User).Where(x => x.Status == TransactStatus.UpdateDriver && x.Date == date)
+                .OrderByDescending(x => x.StartTime).ToListAsync();
+        }
+
+        public async Task<List<Transact>> FillCancelTransact(string date)
+        {
+            return await _context.Transacts.Include(x => x.User).Where(x => x.Status == TransactStatus.Canceled && x.Date == date)
+                .OrderByDescending(x => x.StartTime).ToListAsync();
         }
     }
 }

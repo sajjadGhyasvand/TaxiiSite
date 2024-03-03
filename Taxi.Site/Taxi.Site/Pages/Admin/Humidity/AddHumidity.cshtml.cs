@@ -23,7 +23,7 @@ namespace Taxi.Site.Pages.Admin.Humidity
             if (ModelState.IsValid)
             {
                 _adminService.AddHumidity(_viewModel);
-                return RedirectToPage("HumidityList");
+                return RedirectToPage("HumadityList");
             }
             return Page();
         }

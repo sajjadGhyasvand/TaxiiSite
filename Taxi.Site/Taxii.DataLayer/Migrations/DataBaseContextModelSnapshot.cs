@@ -350,6 +350,107 @@ namespace Taxii.DataLayer.Migrations
                     b.ToTable("Temperatures");
                 });
 
+            modelBuilder.Entity("Taxii.DataLayer.Entities.Transact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<long>("Discount")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("DriverRate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("EndAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EndLat")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("EndLng")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("EndTime")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<long>("Fee")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsCash")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StartAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StartLat")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("StartLng")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("StartTime")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Total")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Transacts");
+                });
+
+            modelBuilder.Entity("Taxii.DataLayer.Entities.TransactRate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RateTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TransactId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RateTypeId");
+
+                    b.HasIndex("TransactId");
+
+                    b.ToTable("TransactRates");
+                });
+
             modelBuilder.Entity("Taxii.DataLayer.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -382,6 +483,40 @@ namespace Taxii.DataLayer.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Taxii.DataLayer.Entities.UserAddress", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Desc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lat")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Lng")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAddresses");
                 });
 
             modelBuilder.Entity("Taxii.DataLayer.Entities.UserDetail", b =>
@@ -446,6 +581,36 @@ namespace Taxii.DataLayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Taxii.DataLayer.Entities.Transact", b =>
+                {
+                    b.HasOne("Taxii.DataLayer.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Taxii.DataLayer.Entities.TransactRate", b =>
+                {
+                    b.HasOne("Taxii.DataLayer.Entities.RateType", "RateType")
+                        .WithMany("TransactRates")
+                        .HasForeignKey("RateTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Taxii.DataLayer.Entities.Transact", "Transact")
+                        .WithMany("TransactRates")
+                        .HasForeignKey("TransactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RateType");
+
+                    b.Navigation("Transact");
+                });
+
             modelBuilder.Entity("Taxii.DataLayer.Entities.User", b =>
                 {
                     b.HasOne("Taxii.DataLayer.Entities.Role", "Role")
@@ -455,6 +620,17 @@ namespace Taxii.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Taxii.DataLayer.Entities.UserAddress", b =>
+                {
+                    b.HasOne("Taxii.DataLayer.Entities.User", "User")
+                        .WithMany("UserAddresses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Taxii.DataLayer.Entities.UserDetail", b =>
@@ -478,9 +654,19 @@ namespace Taxii.DataLayer.Migrations
                     b.Navigation("Drivers");
                 });
 
+            modelBuilder.Entity("Taxii.DataLayer.Entities.RateType", b =>
+                {
+                    b.Navigation("TransactRates");
+                });
+
             modelBuilder.Entity("Taxii.DataLayer.Entities.Role", b =>
                 {
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Taxii.DataLayer.Entities.Transact", b =>
+                {
+                    b.Navigation("TransactRates");
                 });
 
             modelBuilder.Entity("Taxii.DataLayer.Entities.User", b =>
@@ -489,6 +675,8 @@ namespace Taxii.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Factors");
+
+                    b.Navigation("UserAddresses");
 
                     b.Navigation("UserDetail")
                         .IsRequired();

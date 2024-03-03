@@ -19,5 +19,9 @@ namespace Taxii.DataLayer.Entities
         public bool OK { get; set; }
         [Display(Name = "  ترتیب نمایش ")]
         public int? ViewOrder { get; set; }
+
+        #region Relations
+        public virtual ICollection<TransactRate> TransactRates { get; set; }
+        #endregion
     }
 }

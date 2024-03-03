@@ -4,13 +4,204 @@
     Layout = "_SiteLayout";
 }
 
+<!--    Map    -->
+
+
 <div id="map"></div>
 
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="bodyModal">
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts
 {
 
+    <link href="/map/leaflet.css" rel="stylesheet" />
+    <script src="/map/leaflet.js"></script>
     <script>
+        function ConvertNumericToRad(Value) {
+            return Value * Math.PI / 180;
+        }
+
+        var lat1;
+        var lon1;
+
+        var lat2;
+        var lon2;
+
+        var R = 6371;
+
+        // تابع مارکر مبدا
+
+        function myLocation(e) {
+            L.marker(
+                e.latlng,
+                {   
+                    icon: FirstIcon
+                }
+            ).addTo(map);
+
+             lat1 = e.latlng.lat;
+             lon1 = e.latlng.lng;
+
+        }
+
+        //تابع کلیک و مختصات
+        function myClick(e) {
+            L.marker(
+                e.latlng,
+                {
+                    icon: SecondIcon
+                }
+            ).addTo(map);
+
+            lat2 = e.latlng.lat;
+            lon2 = e.latlng.lng;
+
+            var myLat = ConvertNumericToRad(lat2 - lat1);
+            var myLng = ConvertNumericToRad(lon2 - lon1);
+
+            var fLat1 = ConvertNumericToRad(lat1);
+            var fLat2 = ConvertNumericToRad(lat2);
+
+            var a = Math.sin(myLat / 2) * Math.sin(myLat / 2) +
+                Math.sin(myLng / 2) * Math.sin(myLng / 2) * Math.cos(fLat1) * Math.cos(fLat2);
+
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c;
+            alert(d);
+            $.ajax({
+                url: "/Panel/ConfirmRequest/" + d,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+
+        // نمایش ساده نقشه
+        var map = L.map('map').setView([32.200, 52.800], 8);
+        new L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        //محاسبه جایگاه مبدا
+        map.locate({ setView: true, maxZoom: 16 });
+        map.on('locationfound', myLocation);
+
+
+        // تغییر آیکون
+        var IconSetting = L.Icon.extend({
+            options: {
+                iconSize: [50, 50],
+                iconAnchor: [20, 35]
+            }
+        });
+
+        var FirstIcon = new IconSetting({ iconUrl: '/img/001.png' });
+        var SecondIcon = new IconSetting({ iconUrl: '/img/002.png' });
+
+        map.on('click', myLocation);
+        map.on('click', myClick);
+    </script>
+
+    <!--    Map  . ir   -->
+    @*  <link rel="stylesheet" href="https://cdn.map.ir/web-sdk/1.4.2/css/mapp.min.css">
+    <link rel="stylesheet" href="https://cdn.map.ir/web-sdk/1.4.2/css/fa/style.css">
+    <!--    Map    -->
+    <script type="text/javascript" src="https://cdn.map.ir/web-sdk/1.4.2/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.map.ir/web-sdk/1.4.2/js/mapp.env.js"></script>
+    <script type="text/javascript" src="https://cdn.map.ir/web-sdk/1.4.2/js/mapp.min.js"></script> *@
+
+
+    <!--    Map .. ir    -->
+    @*  <script>
+        $(document).ready(function () {
+            var app = new Mapp({
+                element: '#app',
+                presets: {
+                    latlng: {
+                        lat: 36.31963,
+                        lng: 49.99458,
+                    },
+                    zoom: 30
+                },
+                apiKey: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImZlMjg1NGUwODkzMzRiOTRmYjM5Njk5MjY4ZDg0YWRjNjhiMTI4NzRjYWI0NmY0ZDI5MGZiMDAzMjYwMWI0ZWRiNDRiZDY0NmFlMjdiODgwIn0.eyJhdWQiOiIyNjQ5MiIsImp0aSI6ImZlMjg1NGUwODkzMzRiOTRmYjM5Njk5MjY4ZDg0YWRjNjhiMTI4NzRjYWI0NmY0ZDI5MGZiMDAzMjYwMWI0ZWRiNDRiZDY0NmFlMjdiODgwIiwiaWF0IjoxNzA5MzcwMDEyLCJuYmYiOjE3MDkzNzAwMTIsImV4cCI6MTcxMTc4OTIxMiwic3ViIjoiIiwic2NvcGVzIjpbImJhc2ljIl19.gQuIx5Gv3LVjWlshOKcFZj_wumNv3aSU8QFDA75d-0AZsreb_BUlWYKDNf0c44jBElFVDQI7oLXi2IQ9J0b0aBiT9dqfx6CyYF20JSP5lZqmiyr1wSYgeZgkxONYJ9xx4GQh8MsIvbSv3B2oSbegaRVx_Khyt4F05kFos2IAruKoYUJMAgffBPV9bJJ8d5uNsGsXSVrD3yynNwpct5qlcE4fbsfAr9AkhT1oBjTbodjzpLALVLFcu1HJqouz48qHoDeRQ5XO8BTCQAgKNhbioih2Pl15ZHS9F5ovHdD4vBlSaEke9M4PPmGrjoDcyWbhZTvGNx108-xfhUc874HE5g'
+            });
+
+            app.addLayers();
+
+            // app.addGeolocation({
+            //     history: true,
+            //     onLoad: true,
+            //     onLoadCallback: function () {
+            //         console.log(app.states.user.latlng);
+            //     }
+            // });
+            app.map.on('click', function (e) {
+                var marker = app.addMarker({
+                    name: 'AddressMarker',
+                    latlng: {
+                        lat: e.latlng.lat,
+                        lng: e.latlng.lng,
+                    },
+                    icon: app.icons.red,
+                    popup: {
+                        title: {
+                            i18n: 'MarkerTitle',
+                        },
+                        description: {
+                            i18n: 'MarkerDescription'
+                        },
+                        class: 'marker-class',
+                        open: true,
+                    },
+                    pan: false,
+                    draggable: true,
+                    history: false,
+                    on: {
+                        click: function () {
+
+                        },
+                        contextmenu: function () {
+
+                        },
+                    },
+                });
+
+                app.showReverseGeocode({
+                    state: {
+                        latlng: {
+                            lat: e.latlng.lat,
+                            lng: e.latlng.lng,
+                        },
+                        zoom: 15,
+                    },
+                });
+            });
+
+        });
+    </script>  *@
+
+
+    @* --------------------------------------------------------------*@
+
+
+
+
+
+
+
+    @* <script>
 
         var mapOptions = {
             center: [20, 80],
@@ -42,6 +233,6 @@
 
         marker.addTo(map);
 
-    </script>
+    </script> *@
 
 }

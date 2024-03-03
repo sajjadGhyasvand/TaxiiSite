@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Taxi.Site.Pages.Main
 {
-    [Authorize]
+   
     public class indexModel : PageModel
     {
         public void OnGet()
