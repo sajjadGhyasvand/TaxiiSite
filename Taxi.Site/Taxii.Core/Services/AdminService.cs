@@ -830,7 +830,7 @@ namespace Taxii.Core.Services
 
         public int? WeeklyTransact(string date)
         {
-            if (!_context.Transacts.Any(x => x.Status == 2 && x.Date == date))
+            if (!_context.Transacts.Any(x => x.Status == TransactStatus.Success && x.Date == date))
             {
                 return 0;
             }

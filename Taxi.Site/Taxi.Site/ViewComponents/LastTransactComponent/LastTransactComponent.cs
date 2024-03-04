@@ -13,7 +13,7 @@ namespace Taxi.Site.ViewComponents.LastTransactComponent
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult((IViewComponentResult)View("ViewLastTransact", _adminService.LastTransact()));
+            return await Task.FromResult((IViewComponentResult)View("ViewLastTransact", await _adminService.LastTransact()));
         }
     }
 }

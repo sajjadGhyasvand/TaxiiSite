@@ -3,16 +3,17 @@ using System.Globalization;
 using Taxii.Core.Interfaces;
 
 
-namespace Taxi.Site.ViewComponents.LastTransactComponent
+namespace Taxi.Site.ViewComponents.TransactInProcessComponent
 {
-    public class TransacInProcessComponent : ViewComponent
+    public class TransactInProcessComponent : ViewComponent
     {
-        private readonly IAdminService _adminService;
+        private readonly IAdminService _admin;
 
-        public TransacInProcessComponent(IAdminService adminService)
+        public TransactInProcessComponent(IAdminService admin)
         {
-            _adminService = adminService;
+            _admin = admin;
         }
+
         private PersianCalendar pc = new PersianCalendar();
 
 
@@ -21,7 +22,7 @@ namespace Taxi.Site.ViewComponents.LastTransactComponent
             string strToday = pc.GetYear(DateTime.Now).ToString("0000") + "/" +
                 pc.GetMonth(DateTime.Now).ToString("00") + "/" + pc.GetDayOfMonth(DateTime.Now).ToString("00");
 
-            return await Task.FromResult((IViewComponentResult)View("ViewTransactInProcess", _adminService.FillTransactInProcess(strToday)));
+            return await Task.FromResult((IViewComponentResult)View("TView", await _admin.FillTransactInProcess(strToday)));
         }
     }
 }

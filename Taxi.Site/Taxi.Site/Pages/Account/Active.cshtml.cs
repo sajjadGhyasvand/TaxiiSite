@@ -27,6 +27,11 @@ namespace Taxi.Site.Pages.Account
         }
         public async Task<IActionResult> OnPost( )
         {
+
+
+         
+
+
             User user = await _accountService.ActiveUser(_viewModel);
 
             if (user != null)
@@ -36,18 +41,20 @@ namespace Taxi.Site.Pages.Account
                 //احراز هویت ورود به داشبورد 
                 var claims = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.UserName)
+                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.UserName)
+  
                 };
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
+
                 var properties = new AuthenticationProperties()
                 {
-                    IsPersistent = true,
+                    IsPersistent = true
                 };
                 await HttpContext.SignInAsync(principal, properties);
                 // شناسایی  و راهنمایی به پنل 
-                return RedirectToPage("/Panel/Index");
+                return RedirectToPage("/DriverPanel/Index");
             }
 
             ViewData["IsError"] = "true";

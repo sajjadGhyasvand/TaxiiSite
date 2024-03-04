@@ -2,12 +2,50 @@
 @model Taxi.Site.Pages.Panel.ConfirmRequestModel
 
 
-<h3 class="text-center">تأیید سفر</h3>
+<div class="container">
+    <div class="row">
 
-<hr />
+        <div class="col-12">
+            <h1 class="text-center">تأیید سفر</h1>
+        </div>
 
-<img src="/img/42550-oncoming-taxi-icon.png" alt="Snapp" class="img-responsive" style="margin: auto" />
+        <form method="post">
+            <div class="col-12">
+                <div class="form-group d-none">
+                    <input asp-for="_viewModel.UserId" class="form-control " />
+                </div>
+                <div class="form-group d-none">
+                    <input asp-for="_viewModel.StartLat" class="form-control " />
+                </div>
+                <div class="form-group d-none">
+                    <input asp-for="_viewModel.EndLat" class="form-control " />
+                </div>
+                <div class="form-group d-none">
+                    <input asp-for="_viewModel.StartLng" class="form-control " />
+                </div>
+                <div class="form-group d-none">
+                    <input asp-for="_viewModel.EndLng" class="form-control " />
+                </div>
+                <div class="form-group d-none">
+                    <input asp-for="_viewModel.Fee" class="form-control " />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <img src="~/img/42550-oncoming-taxi-icon.png" alt="Snapp" class="img-responsive" style="margin: auto" />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <h3>@Model._viewModel.Fee.ToString("n0") ریال</h3>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <input type="submit" value="تأیید" class="btn btn-info btn-fill" />
+                </div>
+            </div>
+        </form>
 
-<br />
-
-<h4 class="text-center">@Model._viewModel.Price.ToString("n0") ریال</h4>
+    </div>
+</div>

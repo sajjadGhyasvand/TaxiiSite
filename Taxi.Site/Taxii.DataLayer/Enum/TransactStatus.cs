@@ -12,5 +12,6 @@ namespace Taxii.DataLayer.Enum
         UpdateDriver ,
         Success,
         Canceled,
+        None,
     }
 }

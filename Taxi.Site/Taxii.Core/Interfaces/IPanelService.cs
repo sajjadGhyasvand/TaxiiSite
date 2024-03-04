@@ -22,6 +22,12 @@ namespace Taxii.Core.Interfaces
         void AddFactor(Factor factor);
         bool UpdateFactor(Guid userid, string orderNumber, long price);
         Guid GetFactorById(string orderNumber);
+        Task<UserDetail> GetUserDetails(string username);
+        User GetUser(string username);
+        Guid GetUserId(string username);
+        User GetUserById(Guid id);
+        Driver GetDriverById(Guid id);
+
         void UpdatePayment(Guid id, string date, string time, string desc, string bank, string trace, string refId);
         Task<Factor> GetFactor(Guid id);
         #endregion
@@ -38,7 +44,7 @@ namespace Taxii.Core.Interfaces
         #endregion
 
         #region Transact
-
+        void AddTransactModel(Transact model);
         Transact AddTransact(TransactViewModel viewModel);
         void UpdatePayments(Guid id);
         void UpdateRate(Guid id, int rate);
@@ -48,7 +54,11 @@ namespace Taxii.Core.Interfaces
         void UpdateDriver(Guid id, Guid driverId);
         void UpdateDriverRate(Guid id, bool rate);
         void UpdateStatus(Guid id, TransactStatus status);
+        Guid? ExistsUserTransact(Guid id);
+        Transact GetUserTransact(Guid id);
+        //driver 
 
+        List<Transact> GetTransactsNotAccept();
 
 
         #endregion

@@ -147,6 +147,11 @@ namespace Taxii.Core.Services
                 return Convert.ToSingle(temp.Percent / 100);
             }
         }
+        public void AddTransactModel(Transact model)
+        {
+            _context.Transacts.Add(model);
+            _context.SaveChanges();
+        }
 
         public Transact AddTransact(TransactViewModel viewModel)
         {
@@ -247,6 +252,59 @@ namespace Taxii.Core.Services
         public void UpdatePayments(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public List<Transact> GetTransactsNotAccept()
+        {
+            return _context.Transacts.Where(x => x.Status == TransactStatus.Create).OrderByDescending(x => x.Date).ToList();
+        }
+
+        public async Task<UserDetail> GetUserDetails(string username)
+        {
+            return await _context.UserDetails.Include(u => u.User).SingleOrDefaultAsync(u => u.User.UserName == username);
+        }
+
+        public User GetUser(string username)
+        {
+            return _context.Users.FirstOrDefault(x => x.UserName == username);
+        }
+
+        public Guid GetUserId(string username)
+        {
+            return _context.Users.FirstOrDefault(x => x.UserName == username).Id;
+        }
+
+        public User GetUserById(Guid id)
+        {
+            return _context.Users.Find(id);
+        }
+
+        public Driver GetDriverById(Guid id)
+        {
+            return _context.Drivers.Find(id);
+        }
+
+        public Guid? ExistsUserTransact(Guid id)
+        {
+            // 0 == Create
+            // 1 == Driver
+            // 2 == Success
+            // 3 == Cancel
+
+            Transact transact = _context.Transacts.FirstOrDefault(x => x.UserId == id && (x.Status == TransactStatus.Create || x.Status == TransactStatus.UpdateDriver));
+
+            if (transact != null)
+            {
+                return transact.Id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public Transact GetUserTransact(Guid id)
+        {
+            return _context.Transacts.Find(id);
         }
     }
 }
