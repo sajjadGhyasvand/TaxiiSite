@@ -28,12 +28,39 @@ namespace Taxi.Site.Pages.Main
             TransactStatus status = TransactStatus.None;
             Guid? driverID = null;
 
+            string carCode = "";
+            string carName = "";
+            string carColor = "";
+            string driverName = "";
+            long price = 0;
+            string avatar = "";
+            string startLat = "";
+            string endLat = "";
+            string startLng = "";
+            string endLng = "";
+
             if (transactID != null)
             {
                 Transact transact = _panelService.GetUserTransact((Guid)transactID);
 
                 status = transact.Status;
                 driverID = transact.DriverId;
+                price = transact.Total;
+                startLat = transact.StartLat;
+                startLng = transact.StartLng;
+                endLat = transact.EndLat;
+                endLng = transact.EndLng;
+
+                if (transact.DriverId != null)
+                {
+                    Driver driver = _panelService.GetDriverById((Guid)transact.DriverId);
+                    User driverDetail = _panelService.GetUserById((Guid)transact.DriverId);
+
+                    driverName = driverDetail.UserDetail.FullName;
+                    carCode = driver.CarCode;
+                    carColor = driver.Color.Name;
+                    carName = driver.Car.Name;
+                }
             }
 
             _viewModel = new DashboardViewModel()
@@ -41,10 +68,25 @@ namespace Taxi.Site.Pages.Main
                 DriverId = driverID,
                 UserId = user.Id,
                 TransactId = transactID,
-                Status = status
+                Status = status,
+                Avatar = avatar,
+                CarCode = carCode,
+                CarColor = carColor,
+                CarName = carName,
+                DriverName = driverName,
+                Price = price,
+                Wallet = user.Wallet,
+                EndLat = endLat,
+                EndLng = endLng,
+                StartLat = startLat,
+                StartLng = startLng
             };
 
             return Page();
+
+
+            
         }
+
     }
 }

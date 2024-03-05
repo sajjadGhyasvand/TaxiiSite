@@ -7,7 +7,7 @@ using Taxii.DataLayer.Enum;
 
 namespace Taxii.Core.VireModels.Panel
 {
-    public class DashboardViewModel
+    public class DriverPanelViewModel
     {
         public TransactStatus Status { get; set; }
 
@@ -17,13 +17,7 @@ namespace Taxii.Core.VireModels.Panel
 
         public Guid? UserId { get; set; }
 
-        public string DriverName { get; set; }
-
-        public string CarCode { get; set; }
-
-        public string CarName { get; set; }
-
-        public string CarColor { get; set; }
+        public string UserName { get; set; }
 
         public string StartLat { get; set; }
 
@@ -33,11 +27,8 @@ namespace Taxii.Core.VireModels.Panel
 
         public string EndLng { get; set; }
 
-        public string Avatar { get; set; }
-
         public long Price { get; set; }
 
-        public long? Wallet { get; set; }
-
+        public string Desc { get; set; }
     }
 }

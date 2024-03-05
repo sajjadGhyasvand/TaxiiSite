@@ -1,14 +1,12 @@
 ﻿@page "/Panel/Dashboard"
+@using Taxii.DataLayer.Enum
 @model Taxi.Site.Pages.Main.indexModel
 @{
     Layout = "_SiteLayout";
 }
 
-@if (Model._viewModel.Status == Taxii.DataLayer.Enum.TransactStatus.None)
+@if (Model._viewModel.Status == TransactStatus.None)
 {
-    <!--    Map    -->
-
-
     <div id="map"></div>
 
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
@@ -25,12 +23,14 @@
         </div>
     </div>
 
-    @section Scripts
-{
+    @section mySection
+    {
 
-    <link href="/map/leaflet.css" rel="stylesheet" />
-    <script src="/map/leaflet.js"></script>
+    <link href="~/map/leaflet.css" rel="stylesheet" />
+    <script src="~/map/leaflet.js"></script>
+
     <script>
+
         function ConvertNumericToRad(Value) {
             return Value * Math.PI / 180;
         }
@@ -44,12 +44,12 @@
         var R = 6371;
 
         // تابع مارکر مبدا
-
         function myLocation(e) {
             L.marker(
                 e.latlng,
                 {
-                    icon: FirstIcon
+                    icon: FirstIcon,
+                    draggable: true
                 }
             ).addTo(map);
 
@@ -81,7 +81,7 @@
 
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             var d = R * c;
-            alert(d);
+
             $.ajax({
                 url: "/Panel/ConfirmRequest/" + d + '?lat1=' + lat1 + '&lat2=' + lat2 + '&lng1=' + lon1 + '&lng2=' + lon2,
                 type: "Get",
@@ -92,16 +92,12 @@
             });
         }
 
-        // نمایش ساده نقشه
         var map = L.map('map').setView([32.200, 52.800], 8);
-        new L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        //محاسبه جایگاه مبدا
         map.locate({ setView: true, maxZoom: 16 });
         map.on('locationfound', myLocation);
 
-
-        // تغییر آیکون
         var IconSetting = L.Icon.extend({
             options: {
                 iconSize: [50, 50],
@@ -112,136 +108,14 @@
         var FirstIcon = new IconSetting({ iconUrl: '/img/001.png' });
         var SecondIcon = new IconSetting({ iconUrl: '/img/002.png' });
 
-        map.on('click', myLocation);
         map.on('click', myClick);
     </script>
-
-    <!--    Map  . ir   -->
-    @*  <link rel="stylesheet" href="https://cdn.map.ir/web-sdk/1.4.2/css/mapp.min.css">
-    <link rel="stylesheet" href="https://cdn.map.ir/web-sdk/1.4.2/css/fa/style.css">
-    <!--    Map    -->
-    <script type="text/javascript" src="https://cdn.map.ir/web-sdk/1.4.2/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.map.ir/web-sdk/1.4.2/js/mapp.env.js"></script>
-    <script type="text/javascript" src="https://cdn.map.ir/web-sdk/1.4.2/js/mapp.min.js"></script> *@
-
-
-    <!--    Map .. ir    -->
-    @*  <script>
-        $(document).ready(function () {
-            var app = new Mapp({
-                element: '#app',
-                presets: {
-                    latlng: {
-                        lat: 36.31963,
-                        lng: 49.99458,
-                    },
-                    zoom: 30
-                },
-                apiKey: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImZlMjg1NGUwODkzMzRiOTRmYjM5Njk5MjY4ZDg0YWRjNjhiMTI4NzRjYWI0NmY0ZDI5MGZiMDAzMjYwMWI0ZWRiNDRiZDY0NmFlMjdiODgwIn0.eyJhdWQiOiIyNjQ5MiIsImp0aSI6ImZlMjg1NGUwODkzMzRiOTRmYjM5Njk5MjY4ZDg0YWRjNjhiMTI4NzRjYWI0NmY0ZDI5MGZiMDAzMjYwMWI0ZWRiNDRiZDY0NmFlMjdiODgwIiwiaWF0IjoxNzA5MzcwMDEyLCJuYmYiOjE3MDkzNzAwMTIsImV4cCI6MTcxMTc4OTIxMiwic3ViIjoiIiwic2NvcGVzIjpbImJhc2ljIl19.gQuIx5Gv3LVjWlshOKcFZj_wumNv3aSU8QFDA75d-0AZsreb_BUlWYKDNf0c44jBElFVDQI7oLXi2IQ9J0b0aBiT9dqfx6CyYF20JSP5lZqmiyr1wSYgeZgkxONYJ9xx4GQh8MsIvbSv3B2oSbegaRVx_Khyt4F05kFos2IAruKoYUJMAgffBPV9bJJ8d5uNsGsXSVrD3yynNwpct5qlcE4fbsfAr9AkhT1oBjTbodjzpLALVLFcu1HJqouz48qHoDeRQ5XO8BTCQAgKNhbioih2Pl15ZHS9F5ovHdD4vBlSaEke9M4PPmGrjoDcyWbhZTvGNx108-xfhUc874HE5g'
-            });
-
-            app.addLayers();
-
-            // app.addGeolocation({
-            //     history: true,
-            //     onLoad: true,
-            //     onLoadCallback: function () {
-            //         console.log(app.states.user.latlng);
-            //     }
-            // });
-            app.map.on('click', function (e) {
-                var marker = app.addMarker({
-                    name: 'AddressMarker',
-                    latlng: {
-                        lat: e.latlng.lat,
-                        lng: e.latlng.lng,
-                    },
-                    icon: app.icons.red,
-                    popup: {
-                        title: {
-                            i18n: 'MarkerTitle',
-                        },
-                        description: {
-                            i18n: 'MarkerDescription'
-                        },
-                        class: 'marker-class',
-                        open: true,
-                    },
-                    pan: false,
-                    draggable: true,
-                    history: false,
-                    on: {
-                        click: function () {
-
-                        },
-                        contextmenu: function () {
-
-                        },
-                    },
-                });
-
-                app.showReverseGeocode({
-                    state: {
-                        latlng: {
-                            lat: e.latlng.lat,
-                            lng: e.latlng.lng,
-                        },
-                        zoom: 15,
-                    },
-                });
-            });
-
-        });
-    </script>  *@
-
-
-    @* --------------------------------------------------------------*@
-
-
-
-
-
-
-
-    @* <script>
-
-        var mapOptions = {
-            center: [20, 80],
-            zoom: 15
-        }
-
-        var map = new L.map('map', mapOptions);
-
-        var layer = new L.TileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png');
-
-        map.addLayer(layer);
-
-        var iconOptions = {
-            iconUrl: '/img/001.png',
-            iconSize: [50, 50]
-        }
-
-        var firstIcon = L.icon(iconOptions);
-
-        var markerOptions = {
-            title: "First",
-            clickable: true,
-            draggable: true,
-            icon: firstIcon
-        }
-
-        var marker = L.marker([20, 80], markerOptions);
-
-
-        marker.addTo(map);
-
-    </script> *@
 
     }
 }
 else
 {
-    if (Model._viewModel.Status == Taxii.DataLayer.Enum.TransactStatus.Create)
+    if (Model._viewModel.Status == TransactStatus.Create)
     {
         <h2>سفر شما در انتظار تأیید راننده است</h2>
 
@@ -255,8 +129,115 @@ else
             لغو درخواست
         </a>
     }
-    else
+    else if (Model._viewModel.Status == TransactStatus.UpdateDriver)
     {
+        <div class="row" id="result">
+            <div class="col-12" id="map2" style="max-height: 200px"></div>
+            <div class="col-12">
+                <h3>هزینه سفر : @Model._viewModel.Price.ToString("n0") ریال</h3>
+                <br />
+                @if (Model._viewModel.Wallet >= Model._viewModel.Price)
+                {
+                    <h3>اعتبار کافی است</h3>
+                }
+                else
+                {
+                    <a href="#" class="btn btn-success btn-block">پرداخت آنلاین</a>
+                }
+            </div>
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <img src="~/img/driver/@Model._viewModel.Avatar" alt="تصویر پیدا نشد" class="img-responsive" width="80" height="80" style="margin: auto" />
+                            </th>
+                            <th>
+                                <p>@Model._viewModel.CarName</p>
+                            </th>
+                            <th>
+                                <p>@Model._viewModel.CarColor</p>
+                            </th>
+                            <th>
+                                <p>@Model._viewModel.CarCode</p>
+                            </th>
+                            <th>
+                                <p>@Model._viewModel.DriverName</p>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        @section mySection
+        {
 
+    <link href="~/map/leaflet.css" rel="stylesheet" />
+    <script src="~/map/leaflet.js"></script>
+
+    <script>
+
+        var lattt1 = @Model._viewModel.StartLat;
+                var lattt2 = @Model._viewModel.EndLat;
+
+                var lnggg1 = @Model._viewModel.StartLng;
+                var lnggg2 = @Model._viewModel.EndLng;
+
+                // نمایش ساده نقشه
+                var map = L.map('map2').setView([lattt1, lnggg1], 15);
+                L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+                // تغییر آیکون
+                var IconSetting = L.Icon.extend({
+                    options: {
+                        iconSize: [50, 50],
+                        iconAnchor: [20, 35]
+                    }
+                });
+
+                var FirstIcon = new IconSetting({ iconUrl: '/img/001.png' });
+                var SecondIcon = new IconSetting({ iconUrl: '/img/002.png' });
+
+                var marker = L.marker(
+                    new L.LatLng(lattt1, lnggg1),
+                    {
+                        icon: FirstIcon
+                    }
+                ).addTo(map);
+
+                var marker = L.marker(
+                    new L.LatLng(lattt2, lnggg2),
+                    {
+                        icon: SecondIcon
+                    }
+                ).addTo(map);
+
+            </script>
+
+        }
+    }
+    else if (Model._viewModel.Status == TransactStatus.Success)
+    {
+        <div class="row">
+
+            <div class="col-lg-6">
+                <a  href="/panel/rate/@Model._viewModel.TransactId?rate=1">
+                    <i class="fa fa-star-o fa-3x"></i>
+                </a>
+                <a href="/panel/rate/@Model._viewModel.TransactId?rate=2">
+                    <i class="fa fa-star-o fa-3x"></i>
+                </a>
+                <a href="/panel/rate/@Model._viewModel.TransactId?rate=3">
+                    <i class="fa fa-star-o fa-3x"></i>
+                </a>
+                <a href="/panel/rate/@Model._viewModel.TransactId?rate=4">
+                    <i class="fa fa-star-o fa-3x"></i>
+                </a>
+                <a href="/panel/rate/@Model._viewModel.TransactId?rate=5">
+                    <i class="fa fa-star-o fa-3x"></i>
+                </a>
+            </div>
+
+        </div>
     }
 }

@@ -56,13 +56,14 @@ namespace Taxii.Core.Interfaces
         void UpdateStatus(Guid id, TransactStatus status);
         Guid? ExistsUserTransact(Guid id);
         Transact GetUserTransact(Guid id);
+        Transact GetUserConfrimTransact(Guid id);
         //driver 
-
+        Transact GetDriverConfrimTransact(Guid id);
         List<Transact> GetTransactsNotAccept();
-
-
+        void EndRequest(Guid id);
+        void UpdateDrtiverStatus(Guid id, Guid? driverId, TransactStatus status);
         #endregion
-
+        void AddRate(Guid id, int rate);
 
     }
 

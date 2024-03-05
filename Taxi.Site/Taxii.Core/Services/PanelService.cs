@@ -230,7 +230,19 @@ namespace Taxii.Core.Services
             transact.Status = status;
             _context.SaveChanges();
         }
-       
+        public void UpdateDrtiverStatus(Guid id, Guid? driverId, TransactStatus status)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.Status = status;
+
+            if (driverId != null)
+            {
+                transact.DriverId = driverId;
+            }
+
+            _context.SaveChanges();
+        }
 
         public void UpdateDriver(Guid id, Guid driverId)
         {
@@ -305,6 +317,40 @@ namespace Taxii.Core.Services
         public Transact GetUserTransact(Guid id)
         {
             return _context.Transacts.Find(id);
+        }
+
+        public Transact GetDriverConfrimTransact(Guid id)
+        {
+            return _context.Transacts.FirstOrDefault(x => x.DriverId == id && x.Status == TransactStatus.UpdateDriver);
+        }
+
+        public void EndRequest(Guid id)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            if (transact.IsCash == false)
+            {
+                User user = _context.Users.Find(transact.UserId);
+
+                user.Wallet -= transact.Total;
+
+            }
+
+            transact.Status = TransactStatus.Success;
+            _context.SaveChanges();
+        }
+
+        public Transact GetUserConfrimTransact(Guid id)
+        {
+            return _context.Transacts.FirstOrDefault(x => x.UserId == id && x.Status == TransactStatus.UpdateDriver);
+        }
+
+        public void AddRate(Guid id, int rate)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.Rate = rate;
+            _context.SaveChanges();
         }
     }
 }
